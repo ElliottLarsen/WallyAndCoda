@@ -15,7 +15,6 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
-    # DONE: remove phone_number.
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     created = Column(DateTime, nullable=False)
