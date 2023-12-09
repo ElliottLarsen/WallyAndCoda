@@ -4,3 +4,4 @@ migrations
 alembic.ini
 .pytest_cache
 .env
+.DS_Store
