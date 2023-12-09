@@ -56,7 +56,10 @@ def get_current_user(
 
 
 @router.post("/register")
-def register(user_create: UserCreate, db: Session = Depends(get_db)) -> UserResponse:
+def register(
+    user_create: UserCreate,
+    db: Session = Depends(get_db),
+) -> UserResponse:
     user = get_existing_user(db, user_create=user_create)
     if user:
         raise HTTPException(
@@ -97,7 +100,8 @@ def login_for_access_token(
     check_login_attempts(db, user)
     data = {
         "sub": user.username,
-        "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+        "exp": datetime.utcnow() +
+        timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
     }
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
     update_login_attempts(db, user, -(user.login_attempts), datetime.utcnow())

@@ -55,7 +55,8 @@ def get_existing_user(db: Session, user_create: UserCreate) -> User | None:
     return (
         db.query(User)
         .filter(
-            (User.username == user_create.username) | (User.email == user_create.email)
+            (User.username == user_create.username) |
+            (User.email == user_create.email)
         )
         .first()
     )
@@ -83,11 +84,15 @@ def check_login_attempts(db: Session, current_user: User):
             ).total_seconds()
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail=f"Too many failed login attempts. Please try again in {remainder} seconds.",
+                detail=f"Too many failed login attempts. \
+                Please try again in {remainder} seconds.",
                 headers={"WWW-Authenticate": "Bearer"},
             )
         else:
-            update_login_attempts(db, current_user, -(current_user.login_attempts))
+            update_login_attempts(
+                db, current_user,
+                -(current_user.login_attempts)
+            )
     if current_user.login_attempts == 2:
         new_time = current_user.last_login_attempt + timedelta(minutes=10)
         update_login_attempts(db, current_user, 0, new_time)
