@@ -22,3 +22,17 @@ class User(Base):
     last_verified = Column(DateTime, nullable=True)
     last_login_attempt = Column(DateTime, nullable=True)
     login_attempts = Column(Integer, nullable=False)
+
+
+class Pup(Base):
+    """
+    Pup table in DB
+    """
+
+    __tablename__ = "pup"
+    id = Column(String, primary_key=True)
+    pup_name = Column(String, unique=True, nullable=False)
+    pup_sex = Column(String, unique=False, nullable=False)
+    microchip_number = Column(String, unique=True, nullable=False)
+    akc_registration_number = Column(String, unique=True, nullable=True)
+    akc_registration_name = Column(String, unique=True, nullable=True)
