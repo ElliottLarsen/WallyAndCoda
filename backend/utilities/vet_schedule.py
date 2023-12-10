@@ -22,8 +22,8 @@ def da2pp(dob):
     second_early = dob + timedelta(days=70)
     second_late = dob + timedelta(days=84)
 
-    third_early = dob + timedelta(days=98)
-    third_late = dob + timedelta(days=112)
+    third_early = dob + timedelta(days=112)
+    third_late = dob + timedelta(days=126)
 
     return {
         "first": {
@@ -38,4 +38,52 @@ def da2pp(dob):
             "early": third_early.strftime("%Y/%m/%d"),
             "late": third_late.strftime("%Y/%m/%d"),
         },
+    }
+
+
+def bordetella(dob):
+    first_early = dob + timedelta(days=42)
+    first_late = dob + timedelta(days=56)
+
+    second_early = dob + timedelta(days=70)
+    second_late = dob + timedelta(days=84)
+
+    return {
+        "first": {
+            "early": first_early.strftime("%Y/%m/%d"),
+            "late": first_late.strftime("%Y/%m/%d"),
+        },
+        "second": {
+            "early": second_early.strftime("%Y/%m/%d"),
+            "late": second_late.strftime("%Y/%m/%d"),
+        },
+    }
+
+
+def lepto(dob):
+    first_early = dob + timedelta(days=70)
+    first_late = dob + timedelta(days=84)
+
+    second_early = dob + timedelta(days=112)
+    second_late = dob + timedelta(days=126)
+
+    return {
+        "first": {
+            "early": first_early.strftime("%Y/%m/%d"),
+            "late": first_late.strftime("%Y/%m/%d"),
+        },
+        "second": {
+            "early": second_early.strftime("%Y/%m/%d"),
+            "late": second_late.strftime("%Y/%m/%d"),
+        },
+    }
+
+
+def rabies(dob):
+    early = dob + timedelta(days=112)
+    late = dob + timedelta(days=126)
+
+    return {
+        "early": early.strftime("%Y/%m/%d"),
+        "late": late.strftime("%Y/%m/%d"),
     }
