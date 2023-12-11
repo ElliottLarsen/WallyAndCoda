@@ -13,6 +13,7 @@ from domain.user.user_crud import (
     check_login_attempts,
     update_login_attempts,
     remove_user,
+    get_all_users,
 )
 from domain.user.user_schema import UserCreate, UserResponse, Token
 from models import User
@@ -100,8 +101,7 @@ def login_for_access_token(
     check_login_attempts(db, user)
     data = {
         "sub": user.username,
-        "exp": datetime.utcnow() +
-        timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+        "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
     }
     access_token = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
     update_login_attempts(db, user, -(user.login_attempts), datetime.utcnow())
@@ -115,9 +115,17 @@ def login_for_access_token(
 @router.get("/")
 def user_read(
     db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     return get_user_by_id(db=db, id=current_user.id)
+
+
+@router.post("/")
+def user_update(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    pass
 
 
 @router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
@@ -126,3 +134,52 @@ def user_delete(
     current_user: User = Depends(get_current_user),
 ):
     remove_user(db, current_user)
+
+
+@router.get("/all")
+def get_all_user(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    TODO: Check
+    """
+
+    return get_all_users(db)
+
+
+@router.get("/{user_id}")
+def get_user(
+    user_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    TODO: Check
+    """
+
+    return get_user_by_id(db, user_id)
+
+
+@router.post("/{user_id}")
+def update_user(
+    user_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    TODO: Check
+    """
+    pass
+
+
+@router.post("/{user_id}")
+def delete_user(
+    user_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    TODO: Check
+    """
+    pass

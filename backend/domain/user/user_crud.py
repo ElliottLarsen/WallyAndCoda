@@ -34,6 +34,13 @@ def create_user(db: Session, user_create: UserCreate) -> User:
     return get_user_by_username(db, user_create.username)
 
 
+def get_all_users(db: Session):
+    """
+    Retrieves all users
+    """
+    return db.query(User).all()
+
+
 def get_user_by_username(db: Session, username: str) -> User | None:
     """
     Retrieves a user by the given username
