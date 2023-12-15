@@ -7,6 +7,7 @@ from database import get_db
 from domain.user.user_crud import (
     pwd_context,
     create_user,
+    update_user,
     get_user_by_username,
     get_user_by_id,
     get_existing_user,
@@ -15,7 +16,12 @@ from domain.user.user_crud import (
     remove_user,
     get_all_users,
 )
-from domain.user.user_schema import UserCreate, UserResponse, Token
+from domain.user.user_schema import (
+    UserCreate,
+    UserResponse,
+    Token,
+    UserUpdate,
+)
 from models import User
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
@@ -122,10 +128,11 @@ def user_read(
 
 @router.post("/")
 def user_update(
+    user_update: UserUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    pass
+    return update_user(db, user_update, current_user)
 
 
 @router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
@@ -136,8 +143,11 @@ def user_delete(
     remove_user(db, current_user)
 
 
+# Admin endpoints
+
+
 @router.get("/all")
-def get_all_user(
+def get_all_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
@@ -149,7 +159,7 @@ def get_all_user(
 
 
 @router.get("/{user_id}")
-def get_user(
+def get_user_admin(
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -161,8 +171,9 @@ def get_user(
     return get_user_by_id(db, user_id)
 
 
-@router.post("/{user_id}")
-def update_user(
+@router.put("/{user_id}")
+def update_user_admin(
+    user_update: UserUpdate,
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -170,11 +181,12 @@ def update_user(
     """
     TODO: Check
     """
-    pass
+    user = get_user_by_id(db, user_id)
+    return update_user(db, user_update, user)
 
 
-@router.post("/{user_id}")
-def delete_user(
+@router.delete("/{user_id}")
+def delete_user_admin(
     user_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -182,4 +194,6 @@ def delete_user(
     """
     TODO: Check
     """
-    pass
+    user = get_user_by_id(db, user_id)
+
+    return remove_user(db, user)

@@ -1,5 +1,8 @@
 from sqlalchemy.orm import Session
-from domain.user.user_schema import UserCreate
+from domain.user.user_schema import (
+    UserCreate,
+    UserUpdate,
+)
 from models import User
 from passlib.context import CryptContext
 import uuid
@@ -34,6 +37,26 @@ def create_user(db: Session, user_create: UserCreate) -> User:
     return get_user_by_username(db, user_create.username)
 
 
+def update_user(
+    db: Session,
+    user_update: UserUpdate,
+    current_user: User,
+) -> User:
+    """
+    Updates user
+    """
+    user = get_user_by_id(db, current_user.id)
+    user.username = user_update.username
+    user.password = pwd_context.hash(user_update.password1)
+    user.email = user_update.email
+    user.first_name = user_update.first_name
+    user.last_name = user_update.last_name
+    user.modified = datetime.utcnow()
+    db.add(user)
+    db.commit()
+    return get_user_by_id(user.id)
+
+
 def get_all_users(db: Session):
     """
     Retrieves all users
@@ -62,8 +85,7 @@ def get_existing_user(db: Session, user_create: UserCreate) -> User | None:
     return (
         db.query(User)
         .filter(
-            (User.username == user_create.username) |
-            (User.email == user_create.email)
+            (User.username == user_create.username) | (User.email == user_create.email)
         )
         .first()
     )
@@ -96,10 +118,7 @@ def check_login_attempts(db: Session, current_user: User):
                 headers={"WWW-Authenticate": "Bearer"},
             )
         else:
-            update_login_attempts(
-                db, current_user,
-                -(current_user.login_attempts)
-            )
+            update_login_attempts(db, current_user, -(current_user.login_attempts))
     if current_user.login_attempts == 2:
         new_time = current_user.last_login_attempt + timedelta(minutes=10)
         update_login_attempts(db, current_user, 0, new_time)
