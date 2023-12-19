@@ -54,6 +54,7 @@ class VeterinaryClinic(Base):
 
     __tablename__ = "veterinary_clinic"
     id = Column(String, primary_key=True)
+    name = Column(String, unique=False, nullable=False)
     address = Column(String, unique=False, nullable=False)
     phone_number = Column(String, unique=False, nullable=False)
     doctor_name = Column(String, unique=False, nullable=False)
@@ -70,7 +71,6 @@ class VetVisit(Base):
     vet_visit_note = Column(String, unique=False, nullable=False)
     cost = Column(Float, unique=False, nullable=False)
     pup_id = Column(String, ForeignKey("pup.id"))
-    pup = relationship("Pup", backref="vet_visit")
     vet_id = Column(String, ForeignKey("veterinary_clinic.id"))
     vet_clinit = relationship("VeterinaryClinic", backref="vet_visit")
 
