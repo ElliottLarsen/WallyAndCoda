@@ -1,0 +1,42 @@
+from sqlalchemy.orm import Session
+from domain.pup.pup_schema import (
+    PupCreate,
+    PupUpdate,
+)
+from models import Pup
+import uuid
+from datetime import datetime, timedelta
+from starlette import status
+from fastapi import HTTPException
+
+
+def create_pup(
+    db: Session,
+    pup_create: PupCreate,
+) -> Pup:
+    """
+    Creates a new pup
+    """
+    db_pup = Pup(
+        id=str(uuid.uuid4()),
+        pup_name=pup_create.pup_name,
+        pup_sex=pup_create.pup_sex,
+        microchip_number=pup_create.microchip_number,
+        akc_registration_number=pup_create.akc_registration_number,
+        akc_registration_name=pup_create.akc_registration_name,
+    )
+
+    db.add(db_pup)
+    db.commit()
+
+    return get_pup_by_name(db, pup_create.pup_name)
+
+
+def get_pup_by_name(
+    db: Session,
+    pup_name: str,
+) -> Pup | None:
+    """
+    Retrieves a pup by the given name
+    """
+    return db.query(Pup).filter(Pup.pup_name == pup_name).first()
