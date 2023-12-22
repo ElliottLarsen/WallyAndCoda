@@ -77,3 +77,10 @@ def get_pup_by_id(
     Retrieves a pup by the given name
     """
     return db.query(Pup).filter(Pup.id == id).first()
+
+
+def get_all_pups(db: Session):
+    """
+    Retrieves all pups
+    """
+    return db.query(Pup).all()
