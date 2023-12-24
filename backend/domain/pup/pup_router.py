@@ -10,6 +10,7 @@ from domain.pup.pup_crud import (
     get_pup_by_name,
     get_pup_by_id,
     get_all_pups,
+    get_pup_medical_record,
 )
 from domain.pup.pup_schema import (
     PupCreate,
@@ -91,3 +92,13 @@ def pup_remove(
     # TODO: Check
     pup = get_pup_by_id(db, id)
     return remove_pup(db, pup)
+
+@router.get("/{id}/medical_record")
+def pup_medical_record_get(
+    id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # TODO: Check
+    pup = get_pup_by_id(db, id)
+    return get_pup_medical_record(db, pup)

@@ -3,7 +3,11 @@ from domain.pup.pup_schema import (
     PupCreate,
     PupUpdate,
 )
-from models import Pup
+from models import (
+    Pup,
+    PupMedicalRecord,
+    Record,
+)
 import uuid
 from datetime import datetime, timedelta
 from starlette import status
@@ -28,8 +32,21 @@ def create_pup(
 
     db.add(db_pup)
     db.commit()
-
+    create_pup_medical_record(db, db_pup)
     return get_pup_by_name(db, pup_create.pup_name)
+
+
+def create_pup_medical_record(db: Session, pup: Pup):
+    db_pup_medical_record = PupMedicalRecord(
+        id=str(uuid.uuid4()),
+        pup=pup,
+    )
+    db.add(db_pup_medical_record)
+    db.commit()
+
+
+def get_pup_medical_record(db: Session, pup: Pup):
+    return db.query(PupMedicalRecord).filter(PupMedicalRecord.pup_id == pup.id).all()
 
 
 def update_pup(
