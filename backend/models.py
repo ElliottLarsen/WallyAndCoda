@@ -83,7 +83,7 @@ class PupMedicalRecord(Base):
     __tablename__ = "pup_medical_record"
     id = Column(String, primary_key=True)
     pup_id = Column(String, ForeignKey("pup.id"))
-    pup = relationship("Pup", backref="vet_visit")
+    pup = relationship("Pup", backref="pup_medical_record")
 
 
 class Record(Base):
