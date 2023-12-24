@@ -10,6 +10,7 @@ from domain.vet.vet_crud import (
     get_all_vet_clinics,
     get_vet_clinic_by_id,
     remove_vet_clinic,
+    update_vet_clinic,
 )
 from domain.vet.vet_schema import (
     VetClinicCreate,
@@ -60,6 +61,18 @@ def vet_clinic_get(
 ):
     # TODO: Check
     return get_all_vet_clinics(db)
+
+
+@router.put("/clinit/{id}")
+def vet_clinic_update(
+    vet_clinic_update: VetClinicUpdate,
+    id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # TODO: Check
+    vet_clinic = get_vet_clinic_by_id(db, id)
+    return update_vet_clinic(db, vet_clinic_update, vet_clinic)
 
 
 @router.delete("/clinic/{id}")

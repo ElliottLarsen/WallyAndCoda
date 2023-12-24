@@ -31,6 +31,26 @@ def create_vet_clinic(
     return get_vet_clinic_by_name(db, vet_clinic_create.name)
 
 
+def update_vet_clinic(
+    db: Session,
+    vet_clinic_update: VetClinicUpdate,
+    vet_clinic: VeterinaryClinic,
+) -> VeterinaryClinic:
+    """
+    Update vet clinic
+    """
+    vet_clinic = get_vet_clinic_by_id(db, vet_clinic.id)
+    vet_clinic.name = vet_clinic_update.name
+    vet_clinic.address = vet_clinic_update.address
+    vet_clinic.phone_number = vet_clinic_update.phone_number
+    vet_clinic.doctor_name = vet_clinic_update.doctor_name
+
+    db.add(vet_clinic)
+    db.commit()
+
+    return get_vet_clinic_by_id(vet_clinic.id)
+
+
 def get_vet_clinic_by_name(
     db: Session,
     clinic_name: str,
