@@ -9,6 +9,11 @@ import uuid
 from datetime import datetime, timedelta
 from starlette import status
 from fastapi import HTTPException
+from starlette.config import Config
+
+config = Config(".env")
+
+ACCEPTED_EMAILS = [config("EMAIL1"), config("EMAIL2")]
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -127,3 +132,9 @@ def check_login_attempts(db: Session, current_user: User):
 def remove_user(db: Session, current_user: User) -> None:
     db.delete(current_user)
     db.commit()
+
+
+def validate_user(db: Session, current_user: User) -> None:
+    all_users = db.query(User).all()
+    if len(all_users) > 2 or current_user.email not in ACCEPTED_EMAILS:
+        raise HTTPException(status_code=403, detail="You are not authorized.")
