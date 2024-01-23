@@ -12,6 +12,7 @@ from domain.pup.pup_crud import (
     get_all_pups,
     get_pup_medical_record,
 )
+from domain.user.user_crud import validate_user
 from domain.pup.pup_schema import (
     PupCreate,
     PupUpdate,
@@ -33,7 +34,7 @@ def pup_create(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ) -> PupResponse:
-    # TODO: Check
+    validate_user(db, current_user)
     pup = get_pup_by_name(db, pup_create.pup_name)
     if pup:
         raise HTTPException(
@@ -57,7 +58,7 @@ def pup_get(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # TODO: Check
+    validate_user(db, current_user)
     return get_all_pups(db)
 
 
@@ -67,7 +68,7 @@ def one_pup_get(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # TODO: Check
+    validate_user(db, current_user)
     return get_pup_by_id(db, id)
 
 
@@ -78,7 +79,7 @@ def pup_update(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # TODO: Check
+    validate_user(db, current_user)
     pup = get_pup_by_id(db, id)
     return update_pup(db, pup_update, pup)
 
@@ -89,7 +90,7 @@ def pup_remove(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # TODO: Check
+    validate_user(db, current_user)
     pup = get_pup_by_id(db, id)
     return remove_pup(db, pup)
 
@@ -99,6 +100,6 @@ def pup_medical_record_get(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    # TODO: Check
+    validate_user(db, current_user)
     pup = get_pup_by_id(db, id)
     return get_pup_medical_record(db, pup)
