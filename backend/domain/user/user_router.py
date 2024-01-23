@@ -15,6 +15,7 @@ from domain.user.user_crud import (
     update_login_attempts,
     remove_user,
     get_all_users,
+    validate_user,
 )
 from domain.user.user_schema import (
     UserCreate,
@@ -123,6 +124,7 @@ def user_read(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    validate_user(db, current_user)
     return get_user_by_id(db=db, id=current_user.id)
 
 
@@ -132,6 +134,7 @@ def user_update(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    validate_user(db, current_user)
     return update_user(db, user_update, current_user)
 
 
@@ -140,6 +143,7 @@ def user_delete(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    validate_user(db, current_user)
     remove_user(db, current_user)
 
 
@@ -151,10 +155,7 @@ def get_all_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    TODO: Check
-    """
-
+    validate_user(db, current_user)
     return get_all_users(db)
 
 
@@ -164,10 +165,7 @@ def get_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    TODO: Check
-    """
-
+    validate_user(db, current_user)
     return get_user_by_id(db, user_id)
 
 
@@ -178,9 +176,7 @@ def update_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    TODO: Check
-    """
+    validate_user(db, current_user) 
     user = get_user_by_id(db, user_id)
     return update_user(db, user_update, user)
 
@@ -191,9 +187,7 @@ def delete_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """
-    TODO: Check
-    """
+    validate_user(db, current_user)
     user = get_user_by_id(db, user_id)
 
     return remove_user(db, user)
