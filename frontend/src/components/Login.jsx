@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Login() {
 
-    const [loginData, setloginData] = useState({username: "", password: ""});
-    
+    const [loginData, setloginData] = useState({ username: "", password: "" });
+
     const handleChange = (evt) => {
         const changedField = evt.target.name;
         const newValue = evt.target.value;
         setloginData(currData => {
             currData[changedField] = newValue;
-            return{...currData};
+            return { ...currData };
         })
     }
 
