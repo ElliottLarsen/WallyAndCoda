@@ -1,22 +1,26 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Login from './Login';
 
 export default function Register() {
 
     const [registerData, setRegisterData] = useState({ username: "", password1: "", password2: "", first_name: "", last_name: "", email: "" })
+    const navigateTo = useNavigate();
 
     const handleSubmit = (evt) => {
-
         evt.preventDefault();
-
         axios.post("http://127.0.0.1:8000/wallyandcoda/user/register", registerData)
-        .then((res) => {
-            console.log(res);
-            console.log(res.data);
-        })
-        
-
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                navigateTo("/login")
+            })
+            .catch((e) => {
+                console.error("Error during registration: ", e);
+            })
     }
+
     const handleChange = (evt) => {
         const changedField = evt.target.name;
         const newValue = evt.target.value;
@@ -24,7 +28,9 @@ export default function Register() {
             currData[changedField] = newValue;
             return { ...currData };
         })
-
+    }
+    if (registerData) {
+        <Login />
     }
     return (
         <form onSubmit={handleSubmit}>
