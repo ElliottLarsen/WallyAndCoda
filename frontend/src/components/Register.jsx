@@ -12,8 +12,6 @@ export default function Register() {
         evt.preventDefault();
         axios.post("http://127.0.0.1:8000/wallyandcoda/user/register", registerData)
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
                 navigateTo("/login")
             })
             .catch((e) => {
