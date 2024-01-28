@@ -23,8 +23,7 @@ export default function Login() {
         params.append("password", loginData.password);
         axios.post("http://127.0.0.1:8000/wallyandcoda/user/login", params)
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
+                localStorage.setItem("token", res.data.access_token);
                 navigateTo("/user")
             })
             .catch((e) => {

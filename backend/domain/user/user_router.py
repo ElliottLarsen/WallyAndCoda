@@ -143,7 +143,7 @@ def user_delete(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    #validate_user(db, current_user)
+    validate_user(db, current_user)
     remove_user(db, current_user)
 
 
