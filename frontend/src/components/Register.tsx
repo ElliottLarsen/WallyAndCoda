@@ -16,6 +16,7 @@ export default function Register() {
             })
             .catch((e) => {
                 console.error("Error during registration: ", e);
+                window.alert("This user already exists.");
             })
     }
 

@@ -28,6 +28,7 @@ export default function Login() {
             })
             .catch((e) => {
                 console.error("Login error", e.response);
+                window.alert("Login Error");
             })
     }
 
