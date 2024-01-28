@@ -1,3 +1,44 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #7513b6;
+  color: #0dd6d0;
+}
+
+.App-nav {
+  display: flex;
+  flex-direction: row; /* Change to column layout */
+  align-items: center;
+  justify-content: center; /* Center horizontally and vertically */
+  background-color: #7513b6;
+  padding: 10px;
+  width: 100%; /* Take the full width of the viewport */
+}
+
+.App-nav a {
+  text-decoration: none;
+  color: #0dd6d0;
+  margin-right: 20px;
+  font-size: 16px;
+}
+
+.App-nav button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #0dd6d0;
+  font-size: 16px;
+  margin-right: 20px;
+}
+
+.App-nav a:hover,
+.App-nav button:hover {
+  text-decoration: underline;
+}
+
+
+/*
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,3 +81,4 @@
 .read-the-docs {
   color: #888;
 }
+*/
