@@ -39,6 +39,7 @@ export default function Login() {
             <br />
             <label htmlFor="password">Password: </label>
             <input id="password" type="password" placeholder="password" name="password" value={loginData.password} onChange={handleChange} required />
+            <br />
             <button type="submit">Login</button>
         </form>
     )

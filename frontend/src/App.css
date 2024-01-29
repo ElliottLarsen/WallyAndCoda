@@ -37,6 +37,13 @@ body {
   text-decoration: underline;
 }
 
+form {
+  text-align: center;
+}
+
+form > input, button {
+  margin: 0.5rem;
+}
 
 /*
 #root {
