@@ -41,7 +41,7 @@ def pup_create(
             status_code=status.HTTP_409_CONFLICT,
             detail="This pup already exists in the database.",
         )
-    
+
     new_pup = create_pup(db, pup_create=pup_create, owner=current_user)
 
     return PupResponse(
@@ -56,6 +56,15 @@ def pup_create(
 
 
 @router.get("/all")
+def pup_all_get(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_all_pups(db)
+
+
+@router.get("/my_pups")
 def pup_get(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),

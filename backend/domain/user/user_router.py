@@ -176,7 +176,7 @@ def update_user_admin(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    validate_user(db, current_user) 
+    validate_user(db, current_user)
     user = get_user_by_id(db, user_id)
     return update_user(db, user_update, user)
 

@@ -3,7 +3,7 @@ from domain.pup.pup_schema import (
     PupCreate,
     PupUpdate,
 )
-from models import Pup, Record, User
+from models import Pup, User
 import uuid
 from datetime import datetime, timedelta
 from starlette import status
@@ -50,7 +50,7 @@ def update_pup(
     pup.akc_registration_name = pup_update.akc_registration_name
     db.add(pup)
     db.commit()
-    return get_pup_by_id(pup.id)
+    return get_pup_by_id(db, pup.id)
 
 
 def remove_pup(
