@@ -139,7 +139,7 @@ def user_update(
 
 
 @router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
-def user_delete(
+def user_remove(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):

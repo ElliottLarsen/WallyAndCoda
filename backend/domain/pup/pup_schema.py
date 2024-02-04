@@ -1,4 +1,5 @@
 from pydantic import BaseModel, validator
+from models import User
 
 
 class PupCreate(BaseModel):
@@ -36,3 +37,4 @@ class PupResponse(BaseModel):
     microchip_number: str
     akc_registration_number: str
     akc_registration_name: str
+    owner_id: str

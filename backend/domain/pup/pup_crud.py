@@ -3,11 +3,7 @@ from domain.pup.pup_schema import (
     PupCreate,
     PupUpdate,
 )
-from models import (
-    Pup,
-    PupMedicalRecord,
-    Record,
-)
+from models import Pup, Record, User
 import uuid
 from datetime import datetime, timedelta
 from starlette import status
@@ -17,6 +13,7 @@ from fastapi import HTTPException
 def create_pup(
     db: Session,
     pup_create: PupCreate,
+    owner: User,
 ) -> Pup:
     """
     Creates a new pup
@@ -28,25 +25,13 @@ def create_pup(
         microchip_number=pup_create.microchip_number,
         akc_registration_number=pup_create.akc_registration_number,
         akc_registration_name=pup_create.akc_registration_name,
+        owner_id=owner.id,
+        owner=owner,
     )
 
     db.add(db_pup)
     db.commit()
-    create_pup_medical_record(db, db_pup)
     return get_pup_by_name(db, pup_create.pup_name)
-
-
-def create_pup_medical_record(db: Session, pup: Pup):
-    db_pup_medical_record = PupMedicalRecord(
-        id=str(uuid.uuid4()),
-        pup=pup,
-    )
-    db.add(db_pup_medical_record)
-    db.commit()
-
-
-def get_pup_medical_record(db: Session, pup: Pup):
-    return db.query(PupMedicalRecord).filter(PupMedicalRecord.pup_id == pup.id).all()
 
 
 def update_pup(
@@ -101,3 +86,10 @@ def get_all_pups(db: Session):
     Retrieves all pups
     """
     return db.query(Pup).all()
+
+
+def get_user_pups(db: Session, user: User):
+    """
+    Retrieves all pups that belong to the user
+    """
+    return db.query(Pup).filter(Pup.owner_id == user.id).all()

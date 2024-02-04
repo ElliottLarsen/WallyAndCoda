@@ -10,7 +10,7 @@ from domain.pup.pup_crud import (
     get_pup_by_name,
     get_pup_by_id,
     get_all_pups,
-    get_pup_medical_record,
+    get_user_pups,
 )
 from domain.user.user_crud import validate_user
 from domain.pup.pup_schema import (
@@ -41,7 +41,8 @@ def pup_create(
             status_code=status.HTTP_409_CONFLICT,
             detail="This pup already exists in the database.",
         )
-    new_pup = create_pup(db, pup_create=pup_create)
+    
+    new_pup = create_pup(db, pup_create=pup_create, owner=current_user)
 
     return PupResponse(
         id=new_pup.id,
@@ -50,16 +51,17 @@ def pup_create(
         microchip_number=new_pup.microchip_number,
         akc_registration_number=new_pup.akc_registration_number,
         akc_registration_name=new_pup.akc_registration_name,
+        owner=new_pup.owner,
     )
 
 
-@router.get("/")
+@router.get("/all")
 def pup_get(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     validate_user(db, current_user)
-    return get_all_pups(db)
+    return get_user_pups(db, current_user)
 
 
 @router.get("/{id}")
@@ -93,13 +95,3 @@ def pup_remove(
     validate_user(db, current_user)
     pup = get_pup_by_id(db, id)
     return remove_pup(db, pup)
-
-@router.get("/{id}/medical_record")
-def pup_medical_record_get(
-    id: str,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    validate_user(db, current_user)
-    pup = get_pup_by_id(db, id)
-    return get_pup_medical_record(db, pup)
