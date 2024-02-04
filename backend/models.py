@@ -40,7 +40,7 @@ class Pup(Base):
 
     __tablename__ = "pup"
     id = Column(String, primary_key=True)
-    pup_name = Column(String, unique=True, nullable=False)
+    pup_name = Column(String, unique=False, nullable=False)
     pup_sex = Column(String, unique=False, nullable=False)
     microchip_number = Column(String, unique=True, nullable=False)
     akc_registration_number = Column(String, unique=True, nullable=True)

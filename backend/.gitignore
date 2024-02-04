@@ -5,3 +5,4 @@ alembic.ini
 .pytest_cache
 .env
 .DS_Store
+wallyandcoda.db

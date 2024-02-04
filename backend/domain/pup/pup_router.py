@@ -51,7 +51,7 @@ def pup_create(
         microchip_number=new_pup.microchip_number,
         akc_registration_number=new_pup.akc_registration_number,
         akc_registration_name=new_pup.akc_registration_name,
-        owner=new_pup.owner,
+        owner_id=new_pup.owner_id,
     )
 
 
