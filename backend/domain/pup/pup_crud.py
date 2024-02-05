@@ -143,5 +143,9 @@ def get_record_by_id(db: Session, record_id: str) -> Record | None:
     return db.query(Record).filter(Record.id == record_id).first()
 
 
-def get_record_by_pup_id(db: Session, pup_id: str):
-    return db.query(Record).filter(Record.pup_id == pup_id)
+def get_records_by_pup_id(db: Session, pup_id: str):
+    return db.query(Record).filter(Record.pup_id == pup_id).all()
+
+
+def get_one_record(db: Session, record_id: str):
+    return db.query(Record).filter(Record.id == record_id).first()

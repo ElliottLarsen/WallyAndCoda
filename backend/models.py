@@ -61,8 +61,8 @@ class Record(Base):
     doctor_name = Column(String, unique=False, nullable=False)
     vet_address = Column(String, unique=False, nullable=False)
     vet_phone_number = Column(String, unique=False, nullable=False)
-    cost = Column(String, unique=False, nullable=False)
-    record_note = Column(DateTime, nullable=False)
+    cost = Column(Float, unique=False, nullable=False)
+    record_note = Column(Text, nullable=False)
     pup_id = Column(String, ForeignKey("pup.id"))
     pup = relationship("Pup", backref="record")
 

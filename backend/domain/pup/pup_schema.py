@@ -52,15 +52,25 @@ class RecordCreate(BaseModel):
 
     @validator(
         "record_type",
-        "record_date",
         "doctor_name",
         "vet_address",
         "vet_phone_number",
-        "cost",
         "record_note",
     )
     def not_empty(cls, v):
         if not v or not v.strip():
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("record_date")
+    def date_not_empty(cls, v):
+        if not v:
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("cost")
+    def cost_not_empty(cls, v):
+        if not v:
             raise ValueError("This is a required field.")
         return v
 
@@ -76,15 +86,25 @@ class RecordUpdate(BaseModel):
 
     @validator(
         "record_type",
-        "record_date",
         "doctor_name",
         "vet_address",
         "vet_phone_number",
-        "cost",
         "record_note",
     )
     def not_empty(cls, v):
         if not v or not v.strip():
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("record_date")
+    def date_not_empty(cls, v):
+        if not v:
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("cost")
+    def cost_not_empty(cls, v):
+        if not v:
             raise ValueError("This is a required field.")
         return v
 
@@ -111,3 +131,15 @@ class ReminderUpdate(BaseModel):
         if not v or not v.strip():
             raise ValueError("This is a required field.")
         return v
+
+
+class RecordResponse(BaseModel):
+    id: str
+    record_type: str
+    record_date: datetime
+    doctor_name: str
+    vet_address: str
+    vet_phone_number: str
+    cost: float
+    record_note: str
+    pup_id: str

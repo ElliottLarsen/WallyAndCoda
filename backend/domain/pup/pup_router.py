@@ -11,12 +11,23 @@ from domain.pup.pup_crud import (
     get_pup_by_id,
     get_all_pups,
     get_user_pups,
+    create_record,
+    update_record,
+    delete_record,
+    get_records_by_pup_id,
+    get_one_record,
+    get_record_by_id,
 )
 from domain.user.user_crud import validate_user
 from domain.pup.pup_schema import (
     PupCreate,
     PupUpdate,
     PupResponse,
+    RecordCreate,
+    RecordUpdate,
+    RecordResponse,
+    ReminderCreate,
+    ReminderUpdate,
 )
 from models import (
     Pup,
@@ -95,7 +106,7 @@ def pup_update(
     return update_pup(db, pup_update, pup)
 
 
-@router.delete("/{id}")
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def pup_remove(
     id: str,
     db: Session = Depends(get_db),
@@ -104,3 +115,62 @@ def pup_remove(
     validate_user(db, current_user)
     pup = get_pup_by_id(db, id)
     return remove_pup(db, pup)
+
+
+# Records endpoint.
+@router.get("/records/{pup_id}")
+def pup_get_records(
+    pup_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_records_by_pup_id(db, pup_id)
+
+
+@router.get("/records/{record_id}")
+def pup_get_one_record(
+    record_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_one_record(db, record_id)
+
+
+@router.post("/record/{pup_id}")
+def pup_record_create(
+    record_create: RecordCreate,
+    pup_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> RecordResponse:
+    validate_user(db, current_user)
+    pup = get_pup_by_id(db, pup_id)
+    return create_record(db, pup, record_create)
+
+
+@router.put("/record/{record_id}")
+def pup_record_update(
+    record_update: RecordCreate,
+    record_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> RecordResponse:
+    validate_user(db, current_user)
+    record = get_record_by_id(db, record_id)
+    return update_record(db, record_update, record)
+
+
+@router.delete("/record/{record_id}", status_code=status.HTTP_204_NO_CONTENT)
+def pup_record_delete(
+    record_id: str,
+    db: Session = Depends(get_db),
+    current_user: Session = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    record = get_record_by_id(db, record_id)
+    print()
+    print(record)
+    print()
+    return delete_record(db, record)
