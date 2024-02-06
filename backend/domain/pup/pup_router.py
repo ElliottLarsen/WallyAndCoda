@@ -17,6 +17,12 @@ from domain.pup.pup_crud import (
     get_records_by_pup_id,
     get_one_record,
     get_record_by_id,
+    get_reminder_by_id,
+    get_reminder_by_pup_id,
+    create_reminder,
+    update_reminder,
+    delete_reminder,
+    get_one_reminder,
 )
 from domain.user.user_crud import validate_user
 from domain.pup.pup_schema import (
@@ -28,6 +34,7 @@ from domain.pup.pup_schema import (
     RecordResponse,
     ReminderCreate,
     ReminderUpdate,
+    ReminderResponse,
 )
 from models import (
     Pup,
@@ -118,7 +125,7 @@ def pup_remove(
 
 
 # Records endpoint.
-@router.get("/records/{pup_id}")
+@router.get("/record/{pup_id}/all")
 def pup_get_records(
     pup_id: str,
     db: Session = Depends(get_db),
@@ -128,7 +135,7 @@ def pup_get_records(
     return get_records_by_pup_id(db, pup_id)
 
 
-@router.get("/records/{record_id}")
+@router.get("/record/{record_id}")
 def pup_get_one_record(
     record_id: str,
     db: Session = Depends(get_db),
@@ -152,7 +159,7 @@ def pup_record_create(
 
 @router.put("/record/{record_id}")
 def pup_record_update(
-    record_update: RecordCreate,
+    record_update: RecordUpdate,
     record_id: str,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -171,3 +178,59 @@ def pup_record_delete(
     validate_user(db, current_user)
     record = get_record_by_id(db, record_id)
     return delete_record(db, record)
+
+
+# Reminders endpoint.
+@router.get("/reminder/{pup_id}/all")
+def pup_get_reminders(
+    pup_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_reminder_by_pup_id(db, pup_id)
+
+
+@router.get("/reminder/{reminder_id}")
+def pup_get_one_reminder(
+    reminder_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_reminder_by_id(db, reminder_id)
+
+
+@router.post("/reminder/{pup_id}")
+def pup_reminder_create(
+    reminder_create: ReminderCreate,
+    pup_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ReminderResponse:
+    validate_user(db, current_user)
+    pup = get_pup_by_id(db, pup_id)
+    return create_reminder(db, pup, reminder_create)
+
+
+@router.put("/reminder/{reminder_id}")
+def pup_reminder_update(
+    reminder_update: ReminderUpdate,
+    reminder_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+) -> ReminderResponse:
+    validate_user(db, current_user)
+    reminder = get_reminder_by_id(db, reminder_id)
+    return update_reminder(db, reminder_update, reminder)
+
+
+@router.delete("/reminder/{reminder_id}", status_code=status.HTTP_204_NO_CONTENT)
+def pup_reminder_delete(
+    reminder_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    reminder = get_reminder_by_id(db, reminder_id)
+    return delete_reminder(db, reminder)

@@ -114,9 +114,15 @@ class ReminderCreate(BaseModel):
     reminder_note: str
     completed: bool
 
-    @validator("reminder_date", "reminder_note", "completed")
+    @validator("reminder_note")
     def not_empty(cls, v):
         if not v or not v.strip():
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("reminder_date")
+    def date_not_empty(cls, v):
+        if not v:
             raise ValueError("This is a required field.")
         return v
 
@@ -126,9 +132,15 @@ class ReminderUpdate(BaseModel):
     reminder_note: str
     completed: bool
 
-    @validator("reminder_date", "reminder_note", "completed")
+    @validator("reminder_note")
     def not_empty(cls, v):
         if not v or not v.strip():
+            raise ValueError("This is a required field.")
+        return v
+
+    @validator("reminder_date")
+    def date_not_empty(cls, v):
+        if not v:
             raise ValueError("This is a required field.")
         return v
 
@@ -142,4 +154,12 @@ class RecordResponse(BaseModel):
     vet_phone_number: str
     cost: float
     record_note: str
+    pup_id: str
+
+
+class ReminderResponse(BaseModel):
+    id: str
+    reminder_date: datetime
+    reminder_note: str
+    completed: bool
     pup_id: str

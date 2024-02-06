@@ -156,7 +156,7 @@ def create_reminder(db: Session, pup: Pup, reminder_create: ReminderCreate):
         id=str(uuid.uuid4()),
         reminder_date=reminder_create.reminder_date,
         reminder_note=reminder_create.reminder_note,
-        complete=reminder_create.completed,
+        completed=reminder_create.completed,
         pup_id=pup.id,
         pup=pup,
     )
