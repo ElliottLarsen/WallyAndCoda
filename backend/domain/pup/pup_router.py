@@ -170,7 +170,4 @@ def pup_record_delete(
 ):
     validate_user(db, current_user)
     record = get_record_by_id(db, record_id)
-    print()
-    print(record)
-    print()
     return delete_record(db, record)

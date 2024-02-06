@@ -149,3 +149,48 @@ def get_records_by_pup_id(db: Session, pup_id: str):
 
 def get_one_record(db: Session, record_id: str):
     return db.query(Record).filter(Record.id == record_id).first()
+
+
+def create_reminder(db: Session, pup: Pup, reminder_create: ReminderCreate):
+    db_reminder = Reminder(
+        id=str(uuid.uuid4()),
+        reminder_date=reminder_create.reminder_date,
+        reminder_note=reminder_create.reminder_note,
+        complete=reminder_create.completed,
+        pup_id=pup.id,
+        pup=pup,
+    )
+
+    db.add(db_reminder)
+    db.commit()
+
+    return db_reminder
+
+
+def update_reminder(db: Session, reminder_update: ReminderUpdate, reminder: Reminder):
+    reminder = get_reminder_by_id(db, reminder.id)
+    reminder.reminder_date = reminder_update.reminder_date
+    reminder.reminder_note = reminder_update.reminder_note
+    reminder.completed = reminder_update.completed
+
+    db.add(reminder)
+    db.commit()
+
+    return get_reminder_by_id(db, reminder.id)
+
+
+def delete_reminder(db: Session, reminder: Reminder):
+    db.delete(reminder)
+    db.commit()
+
+
+def get_reminder_by_id(db: Session, reminder_id: str) -> Reminder | None:
+    return db.query(Reminder).filter(Reminder.id == reminder_id).first()
+
+
+def get_reminder_by_pup_id(db: Session, pup_id: str):
+    return db.query(Reminder).filter(Reminder.pup_id == pup_id).all()
+
+
+def get_one_reminder(db: Session, reminder_id: str):
+    return db.query(Reminder).filter(Reminder.id == reminder_id).first()
