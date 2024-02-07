@@ -13,7 +13,7 @@ from starlette.config import Config
 
 config = Config(".env")
 
-ACCEPTED_EMAILS = [config("EMAIL1"), config("EMAIL2")]
+ACCEPTED_EMAILS = [config("EMAIL1", default="default1"), config("EMAIL2", default="default2")]
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

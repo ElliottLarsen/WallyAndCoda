@@ -31,8 +31,8 @@ from starlette.config import Config
 config = Config(".env")
 router = APIRouter(prefix="/wallyandcoda/user")
 
-ACCESS_TOKEN_EXPIRE_MINUTES = int(config("ACCESS_TOKEN_EXPIRE_MINUTES"))
-SECRET_KEY = config("SECRET_KEY")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(config("ACCESS_TOKEN_EXPIRE_MINUTES", default=10))
+SECRET_KEY = config("SECRET_KEY", default="SECRET_KEY")
 ALGORITHM = "HS512"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/wallyandcoda/user/login")
 
