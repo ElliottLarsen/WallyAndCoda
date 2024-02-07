@@ -39,3 +39,36 @@ def test_user_account_delete_401():
     """
     response = client_401.delete("/wallyandcoda/user/")
     assert response.status_code == 401
+
+
+def test_user_account_get_all_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.get("/wallyandcoda/user/all")
+    assert response.status_code == 401
+
+
+def test_user_account_get_by_id_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.get("/wallyandcoda/user/eerd334872-34")
+    assert response.status_code == 401
+
+
+def test_user_account_put_401():
+    """
+    Unauthorized access
+    """
+
+    response = client_401.put("/wallyandcoda/user/eerd334872-34")
+    assert response.status_code == 401
+
+
+def test_user_account_delete_by_id_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.delete("/wallyandcoda/user/eerd334872-34")
+    assert response.status_code == 401
