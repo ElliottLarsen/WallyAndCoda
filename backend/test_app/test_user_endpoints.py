@@ -130,3 +130,52 @@ def test_user_duplicate_email_register(client):
     }
     response = client.post("/wallyandcoda/user/register", json=data)
     assert response.status_code == 409
+
+
+def test_testuser_login_incorrect_username(client):
+    """
+    Login test with incorrect username
+    """
+    test_user = {
+        "username": "testuser1",
+        "password": "testpassword",
+    }
+    response = client.post("/wallyandcoda/user/login", data=test_user)
+    assert response.status_code == 401
+
+
+def test_testuser_login_incorrect_password(client):
+    """
+    Login test with incorrect username
+    """
+    test_user = {
+        "username": "testuser",
+        "password": "testpassword1",
+    }
+    response = client.post("/wallyandcoda/user/login", data=test_user)
+    assert response.status_code == 401
+
+
+def test_testuser_login(client, test_user):
+    """
+    Login test
+    """
+    response = client.post("/wallyandcoda/user/login", data=test_user)
+    assert response.status_code == 200
+    assert "access_token" in response.json()
+    assert "token_type" in response.json()
+    assert "username" in response.json()
+
+    return response.json()["access_token"]
+
+
+def test_testuser_remove(client, test_user):
+    """
+    User remove test
+    """
+    access_token = test_testuser_login(client, test_user)
+    response = client.delete(
+        "/wallyandcoda/user", headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    assert response.status_code == 204
