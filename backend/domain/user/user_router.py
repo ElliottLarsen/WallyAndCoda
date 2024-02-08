@@ -123,7 +123,7 @@ def login_for_access_token(
 def user_read(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-):
+) -> UserResponse:
     validate_user(db, current_user)
     return get_user_by_id(db=db, id=current_user.id)
 
