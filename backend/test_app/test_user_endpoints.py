@@ -29,15 +29,6 @@ def test_user_account_get_401():
     assert response.status_code == 401
 
 
-def test_user_account_post_401():
-    """
-    Unauthorized access
-    """
-
-    response = client_401.post("/wallyandcoda/user/")
-    assert response.status_code == 401
-
-
 def test_user_account_delete_401():
     """
     Unauthorized access
@@ -184,7 +175,28 @@ def test_testuser_get(client, test_user):
 
 
 def test_testuser_put(client, test_user):
-    pass
+    """
+    User put test
+    """
+    access_token = test_testuser_login(client, test_user)
+    data = {
+        "username": "testuser",
+        "password1": "testpassword",
+        "password2": "testpassword",
+        "first_name": "first_name",
+        "last_name": "last_name",
+        "email": "testuser@testuser.com",
+    }
+    response = client.put(
+        "/wallyandcoda/user",
+        json=data,
+        headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    assert response.json()["first_name"] == "first_name"
+    assert response.json()["last_name"] == "last_name"
+    assert response.json()["first_name"] != "TEST"
+    assert response.json()["last_name"] != "USER"
 
 
 def test_testuser_remove(client, test_user):

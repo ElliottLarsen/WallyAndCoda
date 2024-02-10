@@ -128,12 +128,12 @@ def user_read(
     return get_user_by_id(db=db, id=current_user.id)
 
 
-@router.post("/")
+@router.put("/")
 def user_update(
     user_update: UserUpdate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
-):
+) -> UserResponse:
     validate_user(db, current_user)
     return update_user(db, user_update, current_user)
 
