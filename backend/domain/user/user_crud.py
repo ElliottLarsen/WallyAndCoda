@@ -59,7 +59,7 @@ def update_user(
     user.modified = datetime.utcnow()
     db.add(user)
     db.commit()
-    return get_user_by_id(user.id)
+    return get_user_by_id(db, user.id)
 
 
 def get_all_users(db: Session):
