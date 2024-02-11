@@ -105,3 +105,44 @@ def test_delte_record_401():
 
 
 # Reminders tests
+
+
+def test_get_reminder_all_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.get("/wallyandcoda/pup/reminder/3431-3fasd/all")
+    assert response.status_code == 401
+
+
+def test_get_one_reminder_401():
+    """
+    Unauthorized access
+    """
+
+    response = client_401.get("/wallyandcoda/pup/reminder/1212-1asdf")
+    assert response.status_code == 401
+
+
+def test_post_reminder_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.post("/wallyandcoda/pup/reminder/3431-3fasd")
+    assert response.status_code == 401
+
+
+def test_update_reminder_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.put("/wallyandcoda/pup/reminder/1212-1asdf")
+    assert response.status_code == 401
+
+
+def test_delte_reminder_401():
+    """
+    Unauthorized access
+    """
+    response = client_401.delete("/wallyandcoda/pup/reminder/1212-1asdf")
+    assert response.status_code == 401
