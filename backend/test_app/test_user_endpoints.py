@@ -5,7 +5,6 @@ from main import app
 client_401 = TestClient(app)
 
 
-# TODO
 @pytest.fixture
 def client():
     return TestClient(app)
@@ -190,7 +189,7 @@ def test_testuser_put(client, test_user):
     response = client.put(
         "/wallyandcoda/user",
         json=data,
-        headers={"Authorization": f"Bearer {access_token}"}
+        headers={"Authorization": f"Bearer {access_token}"},
     )
 
     assert response.json()["first_name"] == "first_name"
@@ -205,7 +204,8 @@ def test_testuser_remove(client, test_user):
     """
     access_token = test_testuser_login(client, test_user)
     response = client.delete(
-        "/wallyandcoda/user", headers={"Authorization": f"Bearer {access_token}"}
+        "/wallyandcoda/user", 
+        headers={"Authorization": f"Bearer {access_token}"},
     )
 
     assert response.status_code == 204
