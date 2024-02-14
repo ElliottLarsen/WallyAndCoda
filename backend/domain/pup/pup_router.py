@@ -23,6 +23,8 @@ from domain.pup.pup_crud import (
     update_reminder,
     delete_reminder,
     get_one_reminder,
+    get_all_records_all,
+    get_all_reminders_all,
 )
 from domain.user.user_crud import validate_user
 from domain.pup.pup_schema import (
@@ -234,3 +236,12 @@ def pup_reminder_delete(
     validate_user(db, current_user)
     reminder = get_reminder_by_id(db, reminder_id)
     return delete_reminder(db, reminder)
+
+
+@router.get("/record/all")
+def pup_record_get_all_records(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    validate_user(db, current_user)
+    return get_all_records_all(db)

@@ -194,3 +194,11 @@ def get_reminder_by_pup_id(db: Session, pup_id: str):
 
 def get_one_reminder(db: Session, reminder_id: str):
     return db.query(Reminder).filter(Reminder.id == reminder_id).first()
+
+
+def get_all_records_all(db: Session):
+    return db.query(Record).all()
+
+
+def get_all_reminders_all(db: Session):
+    return db.query(Reminder).all()

@@ -1,6 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 from main import app
+from datetime import datetime
+import json
 
 client_401 = TestClient(app)
 
@@ -164,38 +166,6 @@ def test_update_pup(client, test_user):
     assert response.json()["akc_registration_name"] == "UPDATEPUP"
 
 
-def test_remove_pup(client, test_user):
-    """
-    Pup delete endpoint test
-    """
-    access_token = test_setup_login_user(client, test_user)
-    pup_response = client.get(
-        "/wallyandcoda/pup/my_pups", headers={"Authorization": f"Bearer {access_token}"}
-    )
-    my_pup = pup_response.json()[0]
-    my_pup_id = my_pup["id"]
-
-    response = client.delete(
-        f"/wallyandcoda/pup/{my_pup_id}",
-        headers={"Authorization": f"Bearer {access_token}"},
-    )
-
-    assert response.status_code == 204
-
-
-def test_remove_user(client, test_user):
-    """
-    Remove user
-    """
-    access_token = test_setup_login_user(client, test_user)
-    response = client.delete(
-        "/wallyandcoda/user",
-        headers={"Authorization": f"Bearer {access_token}"},
-    )
-
-    assert response.status_code == 204
-
-
 # Records tests
 
 
@@ -232,12 +202,126 @@ def test_update_record_401():
     assert response.status_code == 401
 
 
-def test_delte_record_401():
+def test_delete_record_401():
     """
     Unauthorized access
     """
     response = client_401.delete("/wallyandcoda/pup/record/2323-2asdf")
     assert response.status_code == 401
+
+
+def test_post_record(client, test_user):
+    """
+    Pup record create test
+    """
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups", headers={"Authorization": f"Bearer {access_token}"}
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    data = {
+        "record_type": "vaccine",
+        "record_date": "2024-02-13 09:49:07",
+        "doctor_name": "my doctor",
+        "vet_address": "123 Vet Drive",
+        "vet_phone_number": "1234567890",
+        "cost": 30.00,
+        "record_note": "N/A",
+    }
+
+    response = client.post(
+        f"/wallyandcoda/pup/record/{my_pup_id}",
+        json=data,
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["record_type"] == "vaccine"
+    assert response.json()["doctor_name"] == "my doctor"
+    assert response.json()["vet_address"] == "123 Vet Drive"
+    assert response.json()["vet_phone_number"] == "1234567890"
+    assert response.json()["cost"] == 30.00
+    assert response.json()["record_note"] == "N/A"
+
+
+def test_get_record(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    response = client.get(
+        f"/wallyandcoda/pup/record/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert len(response.json()) == 1
+
+
+def test_update_record(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    record_response = client.get(
+        f"/wallyandcoda/pup/record/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_record = record_response.json()[0]
+    record_id = pup_record["id"]
+
+    data = {
+        "record_type": "vaccine",
+        "record_date": "2024-02-13 09:49:07",
+        "doctor_name": "my doctor update",
+        "vet_address": "123 Vet Drive",
+        "vet_phone_number": "1234567890",
+        "cost": 35.00,
+        "record_note": "N/A",
+    }
+
+    response = client.put(
+        f"/wallyandcoda/pup/record/{record_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json=data,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["cost"] == 35.00
+    assert response.json()["doctor_name"] == "my doctor update"
+
+
+def test_delete_record(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    record_response = client.get(
+        f"/wallyandcoda/pup/record/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_record = record_response.json()[0]
+    record_id = pup_record["id"]
+
+    response = client.delete(
+        f"/wallyandcoda/pup/record/{record_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 204
 
 
 # Reminders tests
@@ -276,9 +360,146 @@ def test_update_reminder_401():
     assert response.status_code == 401
 
 
-def test_delte_reminder_401():
+def test_delete_reminder_401():
     """
     Unauthorized access
     """
     response = client_401.delete("/wallyandcoda/pup/reminder/1212-1asdf")
     assert response.status_code == 401
+
+
+def test_post_reminder(client, test_user):
+    """
+    Pup reminder create test
+    """
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups", headers={"Authorization": f"Bearer {access_token}"}
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    data = {
+        "reminder_date": "2024-03-13 09:49:07",
+        "reminder_note": "N/A",
+        "completed": False,
+    }
+
+    response = client.post(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}",
+        json=data,
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["reminder_note"] == "N/A"
+    assert response.json()["completed"] is False
+
+
+def test_get_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert len(response.json()) == 1
+
+
+def test_update_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    reminder_response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_reminder = reminder_response.json()[0]
+    reminder_id = pup_reminder["id"]
+
+    data = {
+        "reminder_date": "2024-03-13 09:49:07",
+        "reminder_note": "UPDATE",
+        "completed": True,
+    }
+
+    response = client.put(
+        f"/wallyandcoda/pup/reminder/{reminder_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json=data,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["reminder_note"] == "UPDATE"
+    assert response.json()["completed"] == True
+
+
+def test_delete_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    reminder_response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_reminder = reminder_response.json()[0]
+    reminder_id = pup_reminder["id"]
+
+    response = client.delete(
+        f"/wallyandcoda/pup/reminder/{reminder_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 204
+
+
+# Clean Up
+
+
+def test_remove_pup(client, test_user):
+    """
+    Pup delete endpoint test
+    """
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups", headers={"Authorization": f"Bearer {access_token}"}
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    response = client.delete(
+        f"/wallyandcoda/pup/{my_pup_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 204
+
+
+def test_remove_user(client, test_user):
+    """
+    Remove user
+    """
+    access_token = test_setup_login_user(client, test_user)
+    response = client.delete(
+        "/wallyandcoda/user",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 204
