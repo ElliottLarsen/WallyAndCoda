@@ -360,12 +360,114 @@ def test_update_reminder_401():
     assert response.status_code == 401
 
 
-def test_delte_reminder_401():
+def test_delete_reminder_401():
     """
     Unauthorized access
     """
     response = client_401.delete("/wallyandcoda/pup/reminder/1212-1asdf")
     assert response.status_code == 401
+
+
+def test_post_reminder(client, test_user):
+    """
+    Pup reminder create test
+    """
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups", headers={"Authorization": f"Bearer {access_token}"}
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    data = {
+        "reminder_date": "2024-03-13 09:49:07",
+        "reminder_note": "N/A",
+        "completed": False,
+    }
+
+    response = client.post(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}",
+        json=data,
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["reminder_note"] == "N/A"
+    assert response.json()["completed"] is False
+
+
+def test_get_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert len(response.json()) == 1
+
+
+def test_update_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    reminder_response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_reminder = reminder_response.json()[0]
+    reminder_id = pup_reminder["id"]
+
+    data = {
+        "reminder_date": "2024-03-13 09:49:07",
+        "reminder_note": "UPDATE",
+        "completed": True,
+    }
+
+    response = client.put(
+        f"/wallyandcoda/pup/reminder/{reminder_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+        json=data,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["reminder_note"] == "UPDATE"
+    assert response.json()["completed"] == True
+
+
+def test_delete_reminder(client, test_user):
+    access_token = test_setup_login_user(client, test_user)
+    pup_response = client.get(
+        "/wallyandcoda/pup/my_pups",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    my_pup = pup_response.json()[0]
+    my_pup_id = my_pup["id"]
+
+    reminder_response = client.get(
+        f"/wallyandcoda/pup/reminder/{my_pup_id}/all",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+    pup_reminder = reminder_response.json()[0]
+    reminder_id = pup_reminder["id"]
+
+    response = client.delete(
+        f"/wallyandcoda/pup/reminder/{reminder_id}",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    assert response.status_code == 204
 
 
 # Clean Up
