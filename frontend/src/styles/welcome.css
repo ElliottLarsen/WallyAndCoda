@@ -8,7 +8,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
 }
 
 .square {
@@ -17,13 +17,40 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+}
+
+.square h1,
+.square h2 {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.square h1 {
+    margin-bottom: 0.5rem;
+}
+
+.square h2 {
+    margin-top: 0.5rem;
 }
 
 .brown {
     background-color: #ca776e;
 }
 
-.blue {
-    background-color: #c1f1f9;
+.white {
+    text-align: center;
 }
+
+.App-nav {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    font-size: 1.3rem;
+}
+  
+  .App-nav a {
+    margin: 0 10px; /* Add margin between links */
+    text-decoration: none;
+    color: #333; /* Set link color */
+  }
+  
