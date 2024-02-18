@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/welcome.css';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Welcome from './components/Welcome.jsx';

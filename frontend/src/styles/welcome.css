@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    color: #fdfbfc;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.square {
+    height: 70vh;
+    width: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brown {
+    background-color: #ca776e;
+}
+
+.blue {
+    background-color: #c1f1f9;
+}
