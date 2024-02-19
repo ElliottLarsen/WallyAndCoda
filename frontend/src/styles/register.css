@@ -48,3 +48,7 @@ body {
     color: #333;
     /* Set link color */
 }
+
+hr {
+    width: 15rem;
+}

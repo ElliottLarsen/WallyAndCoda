@@ -6,8 +6,9 @@ export default function Welcome() {
         <>
             <div className='flex-container'>
                 <div className='square brown'>
+                    <hr/>
                     <h1>Welcome!</h1>
-                    <h2>Please register or login</h2>
+                    <hr/>
                 </div>
                 <div className='square white'>
                     <img src={whippet} alt="Whippet picture" />
