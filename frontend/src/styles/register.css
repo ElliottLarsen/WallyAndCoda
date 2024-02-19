@@ -52,3 +52,24 @@ body {
 hr {
     width: 15rem;
 }
+
+label {
+    display: inline-block;
+    width: 15rem;
+    padding-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+input {
+    width: 13rem;
+    height: 1.3rem;
+}
+
+button {
+    background-color: #ca776e;
+    color: #fdfbfc;
+    border: none;
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+}

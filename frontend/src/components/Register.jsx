@@ -25,10 +25,10 @@ export default function Register() {
                         <input type="text" name="password2" placeholder="password2" id="password2" required />
                         <br />
                         <label htmlFor="first_name">First Name: </label>
-                        <input type="text" name="first_name" placeholder="first_name" id="first_name" required />
+                        <input type="text" name="first_name" placeholder="first name" id="first_name" required />
                         <br />
                         <label htmlFor="last_name">Last Name: </label>
-                        <input type="text" name="last_name" placeholder="last_name" id="last_name" equired />
+                        <input type="text" name="last_name" placeholder="last name" id="last_name" equired />
                         <br />
                         <label htmlFor="email">Email: </label>
                         <input type="text" name="email" placeholder="email" id="email" required />
