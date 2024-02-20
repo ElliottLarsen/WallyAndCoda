@@ -6,7 +6,22 @@ import '../styles/register.css'
 
 export default function Register() {
 
-    const [registerData, setRegisterData] = useState({username: "", password1: "", password2: "", first_name: "", last_name: "", email: ""})
+    const [registerData, setRegisterData] = useState({ username: "", password1: "", password2: "", first_name: "", last_name: "", email: "" })
+
+    const navigateTo = useNavigate();
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        axios.post("http://127.0.0.1:8000/wallyandcoda/user/register", registerData)
+            .then((res) => {
+                navigateTo("/login")
+            })
+            .catch((e) => {
+                console.error("Error during registration: ", e);
+                window.alert("This user already exists.");
+            })
+    }
+
 
     const handleChange = (evt) => {
         const changedField = evt.target.name;
@@ -25,12 +40,12 @@ export default function Register() {
         <>
             <div className='flex-container'>
                 <div className='square brown'>
-                    <hr/>
+                    <hr />
                     <h1>Register</h1>
-                    <hr/>
+                    <hr />
                 </div>
                 <div className='square white'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <label htmlFor="username">Username: </label>
                         <input type="text" name="username" placeholder="username" id="username" onChange={handleChange} required />
                         <br />
