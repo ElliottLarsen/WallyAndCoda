@@ -5,6 +5,22 @@ import Login from './Login';
 import '../styles/register.css'
 
 export default function Register() {
+
+    const [registerData, setRegisterData] = useState({username: "", password1: "", password2: "", first_name: "", last_name: "", email: ""})
+
+    const handleChange = (evt) => {
+        const changedField = evt.target.name;
+        const newValue = evt.target.value;
+        setRegisterData(currData => {
+            currData[changedField] = newValue;
+            return { ...currData };
+        })
+    }
+
+    if (registerData) {
+        <Login />
+    }
+
     return (
         <>
             <div className='flex-container'>
@@ -16,22 +32,22 @@ export default function Register() {
                 <div className='square white'>
                     <form>
                         <label htmlFor="username">Username: </label>
-                        <input type="text" name="username" placeholder="username" id="username" required />
+                        <input type="text" name="username" placeholder="username" id="username" onChange={handleChange} required />
                         <br />
                         <label htmlFor="password1">Password: </label>
-                        <input type="text" name="password1" placeholder="password1" id="password1" required />
+                        <input type="text" name="password1" placeholder="password1" id="password1" onChange={handleChange} required />
                         <br />
                         <label htmlFor="password2">Confirm Password: </label>
-                        <input type="text" name="password2" placeholder="password2" id="password2" required />
+                        <input type="text" name="password2" placeholder="password2" id="password2" onChange={handleChange} required />
                         <br />
                         <label htmlFor="first_name">First Name: </label>
-                        <input type="text" name="first_name" placeholder="first name" id="first_name" required />
+                        <input type="text" name="first_name" placeholder="first name" id="first_name" onChange={handleChange} required />
                         <br />
                         <label htmlFor="last_name">Last Name: </label>
-                        <input type="text" name="last_name" placeholder="last name" id="last_name" equired />
+                        <input type="text" name="last_name" placeholder="last name" id="last_name" onChange={handleChange} equired />
                         <br />
                         <label htmlFor="email">Email: </label>
-                        <input type="text" name="email" placeholder="email" id="email" required />
+                        <input type="text" name="email" placeholder="email" id="email" onChange={handleChange} required />
                         <br />
                         <button type="submit">Register</button>
                     </form>
