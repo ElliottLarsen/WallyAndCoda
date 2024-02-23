@@ -5,7 +5,7 @@ export default function User() {
 
     return (
 
-        <h2>Welcome!</h2>
+        <h2>Welcome User!</h2>
 
     )
 }

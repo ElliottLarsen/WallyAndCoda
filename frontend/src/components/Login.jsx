@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'
+import '../styles/login.css';
 
-export default function Login() {
-
-    const [loginData, setloginData] = useState({ username: "", password: "" });
+export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a prop
+    const [loginData, setLoginData] = useState({ username: "", password: "" });
     const navigateTo = useNavigate();
 
     const handleChange = (evt) => {
         const changedField = evt.target.name;
         const newValue = evt.target.value;
-        setloginData(currData => {
+        setLoginData(currData => {
             currData[changedField] = newValue;
             return { ...currData };
         })
@@ -25,7 +24,8 @@ export default function Login() {
         axios.post("http://127.0.0.1:8000/wallyandcoda/user/login", params)
             .then((res) => {
                 localStorage.setItem("token", res.data.access_token);
-                navigateTo("/user")
+                setIsLoggedIn(true); // Update isLoggedIn state to true
+                navigateTo("/user");
             })
             .catch((e) => {
                 console.error("Login error", e.response);
