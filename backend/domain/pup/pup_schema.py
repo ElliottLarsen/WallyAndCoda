@@ -1,6 +1,6 @@
 from pydantic import BaseModel, validator
 from models import User
-from datetime import datetime
+from datetime import date
 
 
 class PupCreate(BaseModel):
@@ -43,7 +43,7 @@ class PupResponse(BaseModel):
 
 class RecordCreate(BaseModel):
     record_type: str
-    record_date: datetime
+    record_date: date
     doctor_name: str
     vet_address: str
     vet_phone_number: str
@@ -77,7 +77,7 @@ class RecordCreate(BaseModel):
 
 class RecordUpdate(BaseModel):
     record_type: str
-    record_date: datetime
+    record_date: date
     doctor_name: str
     vet_address: str
     vet_phone_number: str
@@ -110,7 +110,7 @@ class RecordUpdate(BaseModel):
 
 
 class ReminderCreate(BaseModel):
-    reminder_date: datetime
+    reminder_date: date
     reminder_note: str
     completed: bool
 
@@ -128,7 +128,7 @@ class ReminderCreate(BaseModel):
 
 
 class ReminderUpdate(BaseModel):
-    reminder_date: datetime
+    reminder_date: date
     reminder_note: str
     completed: bool
 
@@ -148,7 +148,7 @@ class ReminderUpdate(BaseModel):
 class RecordResponse(BaseModel):
     id: str
     record_type: str
-    record_date: datetime
+    record_date: date
     doctor_name: str
     vet_address: str
     vet_phone_number: str
@@ -159,7 +159,7 @@ class RecordResponse(BaseModel):
 
 class ReminderResponse(BaseModel):
     id: str
-    reminder_date: datetime
+    reminder_date: date
     reminder_note: str
     completed: bool
     pup_id: str

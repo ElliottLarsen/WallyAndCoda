@@ -122,7 +122,10 @@ const Pup = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${pup_id}`, recordFormData, {
+            await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${pup_id}`, {
+                ...recordFormData,
+                cost: parseFloat(recordFormData.cost) // Convert cost to float
+            }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -182,7 +185,7 @@ const Pup = () => {
                                 <ul>
                                     {records.map(record => (
                                         <li key={record.id}>
-                                            {record.record_type} - {record.record_date}
+                                            {record.record_type} - {record.record_date.split('T')[0]} - {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - {record.cost} - {record.record_note}
                                             <button onClick={() => handleDeleteRecord(record.id, pup.id)}>Delete Record</button>
                                         </li>
                                     ))}
@@ -193,7 +196,7 @@ const Pup = () => {
                                     <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
                                     <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
                                     <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
-                                    <input type="number" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
+                                    <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
                                     <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
                                     <button type="submit">Add Record</button>
                                 </form>
