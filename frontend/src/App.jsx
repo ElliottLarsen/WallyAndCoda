@@ -24,7 +24,6 @@ function App() {
         {/* Conditional rendering based on the authentication state */}
         {isLoggedIn ? (
           <>
-            <Link to='/'>Welcome</Link>
             <Link to='/user'>Account</Link>
             <Link to='/pup'>Pup</Link>
             <Link to='/logout'>Logout</Link> {/* Update to link to the logout route */}
