@@ -50,10 +50,10 @@ export default function Register() {
                         <input type="text" name="username" placeholder="username" id="username" onChange={handleChange} required />
                         <br />
                         <label htmlFor="password1">Password: </label>
-                        <input type="text" name="password1" placeholder="password1" id="password1" onChange={handleChange} required />
+                        <input type="password" name="password1" placeholder="password1" id="password1" onChange={handleChange} required />
                         <br />
                         <label htmlFor="password2">Confirm Password: </label>
-                        <input type="text" name="password2" placeholder="password2" id="password2" onChange={handleChange} required />
+                        <input type="password" name="password2" placeholder="password2" id="password2" onChange={handleChange} required />
                         <br />
                         <label htmlFor="first_name">First Name: </label>
                         <input type="text" name="first_name" placeholder="first name" id="first_name" onChange={handleChange} required />

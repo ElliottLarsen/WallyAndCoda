@@ -83,35 +83,29 @@ const User = () => {
     }
 
     return (
-        <div>
-            <h2>User Information</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
+        <div className='flex-container'>
+            <div className='square brown'>
+                <hr />
+                <h1>User Information</h1>
+                <hr />
+            </div>
+            <div className='square white'>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">Username: </label>
                     <input type="text" name="username" value={formData.username} onChange={handleChange} />
-                </label>
-                <label>
-                    Email:
+                    <label htmlFor="email">Email: </label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange} />
-                </label>
-                <label>
-                    First Name:
+                    <label htmlFor="first_name">First Name: </label>
                     <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} />
-                </label>
-                <label>
-                    Last Name:
+                    <label htmlFor="last_name">Last Name: </label>
                     <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} />
-                </label>
-                <label>
-                    New Password:
+                    <label htmlFor="password1">New Password: </label>
                     <input type="password" name="password1" value={formData.password1} onChange={handleChange} />
-                </label>
-                <label>
-                    Confirm New Password:
+                    <label htmlFor="passwprd2">Confirm New Password: </label>
                     <input type="password" name="password2" value={formData.password2} onChange={handleChange} />
-                </label>
-                <button type="submit">Update</button>
-            </form>
+                    <button type="submit">Update</button>
+                </form>
+            </div>
         </div>
     );
 };
