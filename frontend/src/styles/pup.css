@@ -2,3 +2,51 @@ button.accordion {
     background-color: grey;
     color: white;
 }
+
+.square ul {
+    margin: 0;
+    padding: 0;
+}
+
+.panel button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+    background-color: #ca776e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.panel button:hover {
+    background-color: #a55b52;
+}
+
+.panel ul {
+    list-style: none;
+    padding: 0;
+}
+
+.panel ul li {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.panel form {
+    margin-top: 10px;
+}
+
+.panel label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.panel input {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.panel button {
+    width: 50%;
+}

@@ -170,49 +170,57 @@ const Pup = () => {
     };
 
     return (
-        <div>
-            <h2>Pups</h2>
-            <ul>
-                {pups.map(pup => (
-                    <ul key={pup.id}>
-                        <button className="accordion" onClick={() => toggleAccordion(pup.id)}>
-                            {pup.pup_name}
-                        </button>
-                        {activePup === pup.id && (
-                            <div className="panel">
-                                <button onClick={() => handleDeletePup(pup.id)}>Delete Pup</button>
-                                <button onClick={() => fetchRecords(pup.id)}>View Records</button>
-                                <ul>
-                                    {records.map(record => (
-                                        <li key={record.id}>
-                                            {record.record_type} - {record.record_date.split('T')[0]} - {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - {record.cost} - {record.record_note}
-                                            <button onClick={() => handleDeleteRecord(record.id, pup.id)}>Delete Record</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <form onSubmit={(e) => handleRecordSubmit(e, pup.id)}>
-                                    <input type="text" name="record_type" placeholder="Record Type" value={recordFormData.record_type} onChange={handleRecordChange} required />
-                                    <input type="date" name="record_date" value={recordFormData.record_date} onChange={handleRecordChange} required />
-                                    <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
-                                    <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
-                                    <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
-                                    <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
-                                    <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
-                                    <button type="submit">Add Record</button>
-                                </form>
-                            </div>
-                        )}
-                    </ul>
-                ))}
-            </ul>
-            <form onSubmit={handlePupSubmit}>
-                <input type="text" name="pup_name" placeholder="Pup Name" value={formData.pup_name} onChange={handlePupChange} required />
-                <input type="text" name="pup_sex" placeholder="Pup Sex" value={formData.pup_sex} onChange={handlePupChange} required />
-                <input type="text" name="microchip_number" placeholder="Microchip Number" value={formData.microchip_number} onChange={handlePupChange} required />
-                <input type="text" name="akc_registration_number" placeholder="AKC Registration Number" value={formData.akc_registration_number} onChange={handlePupChange} required />
-                <input type="text" name="akc_registration_name" placeholder="AKC Registration Name" value={formData.akc_registration_name} onChange={handlePupChange} required />
-                <button type="submit">Add Pup</button>
-            </form>
+        <div className='flex-container'>
+            <div className='square white'>
+                <ul>
+                    {pups.map(pup => (
+                        <ul key={pup.id}>
+                            <button className="accordion" onClick={() => toggleAccordion(pup.id)}>
+                                {pup.pup_name}
+                            </button>
+                            {activePup === pup.id && (
+                                <div className="panel">
+                                    {/*<button onClick={() => fetchRecords(pup.id)}>View Records</button>*/}
+                                    <ul>
+                                        {records.map(record => (
+                                            <li key={record.id}>
+                                                {record.record_type} - {record.record_date.split('T')[0]} - {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - {record.cost} - {record.record_note}
+                                                <button onClick={() => handleDeleteRecord(record.id, pup.id)}>Delete Record</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <form onSubmit={(e) => handleRecordSubmit(e, pup.id)}>
+                                        <input type="text" name="record_type" placeholder="Record Type" value={recordFormData.record_type} onChange={handleRecordChange} required />
+                                        <input type="date" name="record_date" value={recordFormData.record_date} onChange={handleRecordChange} required />
+                                        <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
+                                        <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
+                                        <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
+                                        <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
+                                        <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
+                                        <button type="submit">Add Record</button>
+                                    </form>
+                                    <button onClick={() => handleDeletePup(pup.id)}>Delete Pup</button>
+                                </div>
+                            )}
+                        </ul>
+                    ))}
+                </ul>
+            </div>
+            <div className='square white'>
+                <form onSubmit={handlePupSubmit}>
+                    <label htmlFor="pup_name">Pup Name: </label>
+                    <input type="text" name="pup_name" placeholder="Pup Name" value={formData.pup_name} onChange={handlePupChange} required />
+                    <label htmlFor="pup_sex">Pup Sex: </label>
+                    <input type="text" name="pup_sex" placeholder="Pup Sex" value={formData.pup_sex} onChange={handlePupChange} required />
+                    <label htmlFor="microchip_number">Microchip Number: </label>
+                    <input type="text" name="microchip_number" placeholder="Microchip Number" value={formData.microchip_number} onChange={handlePupChange} required />
+                    <label htmlFor="akc_registration_number">AKC Reg. #: </label>
+                    <input type="text" name="akc_registration_number" placeholder="AKC Registration Number" value={formData.akc_registration_number} onChange={handlePupChange} required />
+                    <label htmlFor="akc_registration_name">AKC Reg. Name: </label>
+                    <input type="text" name="akc_registration_name" placeholder="AKC Registration Name" value={formData.akc_registration_name} onChange={handlePupChange} required />
+                    <button type="submit">Add Pup</button>
+                </form>
+            </div>
         </div>
     );
 };
