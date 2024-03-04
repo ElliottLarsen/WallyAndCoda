@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 html,
 body {
+
     height: 100%;
     margin: 0;
+    font-family: "Nunito Sans", sans-serif;
 }
 
 .flex-container {
@@ -47,4 +51,9 @@ body {
     text-decoration: none;
     color: #333;
     /* Set link color */
+}
+
+form{
+    font-family: "Nunito Sans", sans-serif;
+    border-radius: 5px;
 }
