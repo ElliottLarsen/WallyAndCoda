@@ -34,7 +34,7 @@ const PupRecords = () => {
             });
             setPups(response.data);
             if (response.data.length > 0) {
-                setSelectedPup(response.data[0].id); // Select the first pup by default
+                setSelectedPup(response.data[0].id);
                 fetchRecords(response.data[0].id);
             }
         } catch (error) {

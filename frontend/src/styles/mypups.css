@@ -1,0 +1,13 @@
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.trash {
+    padding-left: 1rem;
+}
+
+li {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
