@@ -59,7 +59,7 @@ export default function Register() {
                         <input type="text" name="first_name" placeholder="first name" id="first_name" onChange={handleChange} required />
                         <br />
                         <label htmlFor="last_name">Last Name: </label>
-                        <input type="text" name="last_name" placeholder="last name" id="last_name" onChange={handleChange} equired />
+                        <input type="text" name="last_name" placeholder="last name" id="last_name" onChange={handleChange} required />
                         <br />
                         <label htmlFor="email">Email: </label>
                         <input type="text" name="email" placeholder="email" id="email" onChange={handleChange} required />
