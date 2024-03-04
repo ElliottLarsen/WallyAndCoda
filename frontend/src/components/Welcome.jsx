@@ -12,7 +12,6 @@ export default function Welcome() {
                 </div>
                 <div className='square white'>
                     <img src={whippet} alt="Whippet picture" />
-                    <a href="https://www.vecteezy.com/free-vector/whippet">Whippet Vectors by Vecteezy</a>
                 </div>
             </div>
         </>
