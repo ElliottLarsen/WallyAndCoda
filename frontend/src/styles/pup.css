@@ -50,3 +50,8 @@ button.accordion {
 .panel button {
     width: 50%;
 }
+
+.trash {
+    color: black;
+    padding-left: 1rem;
+}

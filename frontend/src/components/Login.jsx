@@ -25,7 +25,7 @@ export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a 
             .then((res) => {
                 localStorage.setItem("token", res.data.access_token);
                 setIsLoggedIn(true); // Update isLoggedIn state to true
-                navigateTo("/user");
+                navigateTo("/");
             })
             .catch((e) => {
                 console.error("Login error", e.response);

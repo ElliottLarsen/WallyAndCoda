@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../styles/pup.css'
 
 const Pup = () => {
@@ -185,7 +187,7 @@ const Pup = () => {
                                         {records.map(record => (
                                             <li key={record.id}>
                                                 {record.record_type} - {record.record_date.split('T')[0]} - {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - {record.cost} - {record.record_note}
-                                                <button onClick={() => handleDeleteRecord(record.id, pup.id)}>Delete Record</button>
+                                                <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id, pup.id)} />
                                             </li>
                                         ))}
                                     </ul>
