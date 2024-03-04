@@ -119,34 +119,44 @@ const PupRecords = () => {
     };
 
     return (
-        <div className='puprecords-container'>
-            <h1>Pup Records</h1>
-            <div className="pup-dropdown">
-                <label htmlFor="pup">Select a Pup:</label>
-                <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
-                    {pups.map(pup => (
-                        <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
+        <div className='flex-container'>
+            <div className='squre white'>
+                <div className="pup-dropdown">
+                    <label htmlFor="pup">Select a Pup:</label>
+                    <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
+                        {pups.map(pup => (
+                            <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
+                        ))}
+                    </select>
+                </div>
+                <ul>
+                    {records.map(record => (
+                        <li className='pup-record' key={record.id}>
+                            <span>{record.record_type} - {record.record_date.split('T')[0]} - Dr. {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - ${record.cost} - {record.record_note}</span>
+                            <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id)} />
+                        </li>
                     ))}
-                </select>
+                </ul>
             </div>
-            <ul>
-                {records.map(record => (
-                    <li key={record.id}>
-                        <span>{record.record_type} - {record.record_date.split('T')[0]} - {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - {record.cost} - {record.record_note}</span>
-                        <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id)} />
-                    </li>
-                ))}
-            </ul>
-            <form onSubmit={handleRecordSubmit}>
-                <input type="text" name="record_type" placeholder="Record Type" value={recordFormData.record_type} onChange={handleRecordChange} required />
-                <input type="date" name="record_date" value={recordFormData.record_date} onChange={handleRecordChange} required />
-                <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
-                <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
-                <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
-                <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
-                <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
-                <button type="submit">Add Record</button>
-            </form>
+            <div className='square white'>
+                <form onSubmit={handleRecordSubmit}>
+                    <label htmlFor="record_type">Record Type: </label>
+                    <input type="text" name="record_type" placeholder="Record Type" value={recordFormData.record_type} onChange={handleRecordChange} required />
+                    <label htmlFor="record_date">Record Date: </label>
+                    <input type="date" name="record_date" value={recordFormData.record_date} onChange={handleRecordChange} required />
+                    <label htmlFor="doctor_name">Doctor: </label>
+                    <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
+                    <label htmlFor="vet_address">Address: </label>
+                    <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
+                    <label htmlFor="vet_phone_number">Phone Number: </label>
+                    <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
+                    <label htmlFor="cost">Cost: </label>
+                    <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
+                    <label htmlFor="record_note">Note: </label>
+                    <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
+                    <button type="submit">Add Record</button>
+                </form>
+            </div>
         </div>
     );
 };
