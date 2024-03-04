@@ -7,6 +7,8 @@ import Login from './components/Login';
 import User from './components/User';
 import Pup from './components/Pup';
 import Logout from './components/Logout'; // Import the Logout component
+import MyPups from './components/MyPups';
+import PupRecords from './components/PupRecords';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initially, the user is not logged in
@@ -25,7 +27,8 @@ function App() {
         {isLoggedIn ? (
           <>
             <Link to='/user'>Account</Link>
-            <Link to='/pup'>Pup</Link>
+            <Link to='/pup'>Pup Records</Link>
+            <Link to='/my_pups'>My Pups</Link>
             <Link to='/logout'>Logout</Link> {/* Update to link to the logout route */}
           </>
         ) : (
@@ -41,7 +44,8 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} /> {/* Pass setIsLoggedIn to Login component */}
         <Route path='/user' element={<User />} />
-        <Route path='/pup' element={<Pup />} />
+        <Route path='/pup' element={<PupRecords />} />
+        <Route path='/my_pups' element={<MyPups />} />
         <Route path='/logout' element={<Logout setIsLoggedIn={setIsLoggedIn} />} /> {/* Pass setIsLoggedIn to Logout component */}
       </Routes>
     </>
