@@ -60,9 +60,18 @@ label {
     font-size: 1.3rem;
 }
 
+label.required:after{
+    content:"*"; 
+    color:red;
+}
+
+
+
 input {
     width: 13rem;
     height: 1.3rem;
+    padding: 0.75%;
+    border-radius: 5px;
 }
 
 button {
