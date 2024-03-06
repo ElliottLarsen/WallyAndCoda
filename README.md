@@ -61,6 +61,9 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
      - Start the application:
        ```
        npm run dev
+       ```
+     - Explore the frontend application.
+       ```
        localhost:5173
        ```
 
