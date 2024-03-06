@@ -44,6 +44,11 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
        ```
        uvicorn main:app --reload
        ```
+     - Explore the backend endpoints.
+       ```
+       localhost:8000/docs
+       ```
+       
 - Frontend Setup:
      - Navigate to the frontend directory:
        ```
