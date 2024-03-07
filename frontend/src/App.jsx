@@ -10,6 +10,7 @@ import Logout from './components/Logout'; // Import the Logout component
 import MyPups from './components/MyPups';
 import PupRecords from './components/PupRecords';
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initially, the user is not logged in
 
@@ -22,6 +23,9 @@ function App() {
 
   return (
     <>
+      <header>
+        <h1>Wally & Coda</h1>
+      </header>
       <nav className="App-nav">
         {/* Conditional rendering based on the authentication state */}
         {isLoggedIn ? (
@@ -48,6 +52,9 @@ function App() {
         <Route path='/my_pups' element={<MyPups />} />
         <Route path='/logout' element={<Logout setIsLoggedIn={setIsLoggedIn} />} /> {/* Pass setIsLoggedIn to Logout component */}
       </Routes>
+      <footer>
+        <p>&copy;2024 ELD</p>
+      </footer>
     </>
   );
 }

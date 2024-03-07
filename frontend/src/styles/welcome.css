@@ -2,10 +2,23 @@
 
 html,
 body {
-
     height: 100%;
     margin: 0;
     font-family: "Nunito Sans", sans-serif;
+}
+
+header {
+    text-align: left;
+    color: #fdfbfc;
+    background-color: #ca776e;
+    margin: 1% 0;
+    padding: 2%;
+}
+
+footer {
+    text-align: center;
+    color:#ca776e;
+    padding:2%;
 }
 
 .flex-container {
@@ -32,16 +45,18 @@ body {
 
 .brown {
     background-color: #ca776e;
+    
 }
 
 .white {
     text-align: center;
 }
 
-.App-nav {
+nav.App-nav {
     display: flex;
-    justify-content: center;
-    padding-top: 2rem;
+    justify-content: right;
+    /* padding-top: 2rem; */
+    padding: 0 10rem;
     font-size: 1.3rem;
 }
 
@@ -56,4 +71,9 @@ body {
 form{
     font-family: "Nunito Sans", sans-serif;
     border-radius: 5px;
+}
+
+input{
+    font-family: "Nunito Sans", sans-serif ;
+    font-size: 110%;
 }
