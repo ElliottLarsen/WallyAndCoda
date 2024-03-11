@@ -20,15 +20,15 @@ body {
 header {
     display: flex;
     /* text-align: center; */
-    color: #fdfbfc;
-    background-color: #ca776e;
+    color: var(--cream);
+    background-color: var(--brown);
     margin: 1% 0;
     padding: 2%;
 }
 
 footer {
     text-align: center;
-    color:#ca776e;
+    color:var(--brown);
     padding:2%;
 }
 
@@ -50,12 +50,12 @@ footer {
 .square h1 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    color: #fdfbfc;
+    color: var(--cream);
     text-align: center;
 }
 
 .brown {
-    background-color: #ca776e;
+    background-color: var(--brown);
     
 }
 
@@ -78,7 +78,7 @@ footer {
     margin: 0 10px;
     /* Add margin between links */
     text-decoration: none;
-    color: #333;
+    color:var(--black);
     /* Set link color */
 }
 
@@ -117,4 +117,8 @@ button {
     padding: 0 1.5rem;
     margin: 1rem;
     cursor: pointer;
+}
+
+:focus{
+    background-color: var(--blue);
 }
