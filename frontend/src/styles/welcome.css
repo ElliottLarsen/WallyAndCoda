@@ -19,7 +19,7 @@ body {
 
 header {
     display: flex;
-    text-align: left;
+    /* text-align: center; */
     color: #fdfbfc;
     background-color: #ca776e;
     margin: 1% 0;
@@ -63,12 +63,15 @@ footer {
     text-align: center;
 }
 
-nav.App-nav {
-    display: inline-block;
+.App-nav nav{
+    
+    display: flex;
     justify-content: right;
     /* padding-top: 2rem; */
-    /* padding:  2%; */
+    padding:  2%;
+    margin: 1%;
     font-size: 1.3rem;
+    color: var(--plum);
 }
 
 .App-nav a {
@@ -82,9 +85,36 @@ nav.App-nav {
 form{
     font-family: "Nunito Sans", sans-serif;
     border-radius: 5px;
+    margin: 1%;
+}
+
+label{
+    margin:0.1%;
+}
+label.required:after{
+    content:"*"; 
+    color:var(--bluegray);
+}
+
+fieldset{
+    border: none;
 }
 
 input{
     font-family: "Nunito Sans", sans-serif ;
     font-size: 110%;
+    padding: 2%;
+}
+
+button {
+    float: right;
+    background-color: var(--plum);
+    border-radius: 5px;
+    color: var(--cream);
+    border: none;
+    font-size: 1.3rem;
+    line-height: 2;
+    padding: 0 1.5rem;
+    margin: 1rem;
+    cursor: pointer;
 }
