@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+:root {
+    --brown:     rgba(202, 119, 110);
+    --plum:      rgba(143, 97, 132);
+    --bluegray:  rgba(69, 83, 111);
+    --lightblue: rgba(0, 176, 255);
+    --cream:     rgba(249,249,247);
+    --gray:      rgba(129, 133, 137);
+    --black:     rgba(35,43,43);
+}
+
 html,
 body {
     height: 100%;
@@ -8,6 +18,7 @@ body {
 }
 
 header {
+    display: flex;
     text-align: left;
     color: #fdfbfc;
     background-color: #ca776e;
@@ -53,10 +64,10 @@ footer {
 }
 
 nav.App-nav {
-    display: flex;
+    display: inline-block;
     justify-content: right;
     /* padding-top: 2rem; */
-    padding: 0 10rem;
+    /* padding:  2%; */
     font-size: 1.3rem;
 }
 

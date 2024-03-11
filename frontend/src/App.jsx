@@ -24,8 +24,10 @@ function App() {
   return (
     <>
       <header>
-        <h1>Wally & Coda</h1>
-      </header>
+        <div>
+          <h1>Wally & Coda</h1>
+        </div>
+        <div>
       <nav className="App-nav">
         {/* Conditional rendering based on the authentication state */}
         {isLoggedIn ? (
@@ -43,6 +45,8 @@ function App() {
           </>
         )}
       </nav>
+      </div>
+      </header>
       <Routes>
         <Route path='/' element={<Welcome />} />
         <Route path='/register' element={<Register />} />
