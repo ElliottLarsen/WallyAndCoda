@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+:root {
+    --brown:     rgba(202, 119, 110);
+    --plum:      rgba(143, 97, 132);
+    --bluegray:  rgba(69, 83, 111);
+    --lightblue: rgba(0, 176, 255);
+    --cream:     rgba(249,249,247);
+    --gray:      rgba(129, 133, 137);
+    --black:     rgba(35,43,43);
+}
+
 html,
 body {
     height: 100%;
@@ -8,16 +18,17 @@ body {
 }
 
 header {
-    text-align: left;
-    color: #fdfbfc;
-    background-color: #ca776e;
+    display: flex;
+    /* text-align: center; */
+    color: var(--cream);
+    background-color: var(--brown);
     margin: 1% 0;
     padding: 2%;
 }
 
 footer {
     text-align: center;
-    color:#ca776e;
+    color:var(--brown);
     padding:2%;
 }
 
@@ -39,12 +50,12 @@ footer {
 .square h1 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    color: #fdfbfc;
+    color: var(--cream);
     text-align: center;
 }
 
 .brown {
-    background-color: #ca776e;
+    background-color: var(--brown);
     
 }
 
@@ -52,28 +63,62 @@ footer {
     text-align: center;
 }
 
-nav.App-nav {
+.App-nav nav{
+    
     display: flex;
     justify-content: right;
     /* padding-top: 2rem; */
-    padding: 0 10rem;
+    padding:  2%;
+    margin: 1%;
     font-size: 1.3rem;
+    color: var(--plum);
 }
 
 .App-nav a {
     margin: 0 10px;
     /* Add margin between links */
     text-decoration: none;
-    color: #333;
+    color:var(--black);
     /* Set link color */
 }
 
 form{
     font-family: "Nunito Sans", sans-serif;
     border-radius: 5px;
+    margin: 1%;
+}
+
+label{
+    margin:0.1%;
+}
+label.required:after{
+    content:"*"; 
+    color:var(--bluegray);
+}
+
+fieldset{
+    border: none;
 }
 
 input{
     font-family: "Nunito Sans", sans-serif ;
     font-size: 110%;
+    padding: 2%;
+}
+
+button {
+    float: right;
+    background-color: var(--plum);
+    border-radius: 5px;
+    color: var(--cream);
+    border: none;
+    font-size: 1.3rem;
+    line-height: 2;
+    padding: 0 1.5rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+:focus{
+    background-color: var(--blue);
 }
