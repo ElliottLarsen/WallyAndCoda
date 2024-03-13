@@ -43,13 +43,15 @@ export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a 
                 </div>
                 <div className='square white'>
                     <form onSubmit={handleLogin}>
+                        <fieldset>
                         <label htmlFor="username">Username: </label>
                         <input id="username" type="text" placeholder="username" name="username" value={loginData.username} onChange={handleChange} required />
-                        <br />
+                        
                         <label htmlFor="password">Password: </label>
                         <input id="password" type="password" placeholder="password" name="password" value={loginData.password} onChange={handleChange} required />
-                        <br />
+                        
                         <button type="submit">Login</button>
+                        </fieldset>
                     </form>
                 </div>
             </div>

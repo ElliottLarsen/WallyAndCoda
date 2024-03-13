@@ -46,8 +46,6 @@ function App() {
           </>
         )}
       </nav>
-      
-      
       <Routes>
         <Route path='/' element={<Welcome />} />
         <Route path='/register' element={<Register />} />

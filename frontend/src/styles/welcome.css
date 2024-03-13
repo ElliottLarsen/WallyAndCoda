@@ -5,8 +5,10 @@
     --plum:      rgba(143, 97, 132);
     --bluegray:  rgba(69, 83, 111);
     --lightblue: rgba(0, 176, 255);
+    --lightblueT:  rgba(0, 176, 255,0.3);
     --cream:     rgba(249,249,247);
     --gray:      rgba(129, 133, 137);
+    --grayT:     rgba(129, 133, 137, 0.3);
     --black:     rgba(35,43,43);
 }
 
@@ -24,6 +26,11 @@ header {
     background-color: var(--brown);
     margin: 1% 0;
     padding: 2%;
+}
+
+main {
+    margin:;
+    padding:0 25px;
 }
 
 footer {
@@ -69,7 +76,7 @@ footer {
     justify-content: right;
     /* padding-top: 2rem; */
     padding:  2%;
-    margin: 1%;
+    /* margin: 1%; */
     font-size: 1.3rem;
     color: var(--plum);
 }
@@ -82,15 +89,26 @@ footer {
     /* Set link color */
 }
 
+.App-nav a:hover {color:var(--lightblue);}
+
+.App-nav a:active { color:var(--brown);}
+
+.App-nav a:visited {color:var(--plum);}
+
 form{
     font-family: "Nunito Sans", sans-serif;
     border-radius: 5px;
     margin: 1%;
 }
 
-label{
-    margin:0.1%;
+label {
+    display: inline-block;
+    width: 15rem;
+    padding: 1%;
+    font-size: 1.3rem;
+    color: var(--black)
 }
+
 label.required:after{
     content:"*"; 
     color:var(--bluegray);
@@ -100,15 +118,22 @@ fieldset{
     border: none;
 }
 
-input{
+input {
     font-family: "Nunito Sans", sans-serif ;
     font-size: 110%;
-    padding: 2%;
+    width: 13rem;
+    height: 1.5rem;
+    padding: 0.75%;
+    border-radius: 5px;
+    border: 1px solid var(--black);
+    font-size: 110%;
+    color: var(--bluegray);
 }
 
 button {
     float: right;
     background-color: var(--plum);
+    border: 2px solid var(--black);
     border-radius: 5px;
     color: var(--cream);
     border: none;
@@ -119,6 +144,14 @@ button {
     cursor: pointer;
 }
 
-:focus{
-    background-color: var(--blue);
+button:hover{
+
+    background-color: var(--grayT);
+    color: var(--plum);
+    border: 2px solid var(--black);
+}
+
+input:focus{
+    background-color: var(--lightblueT);
+    color:var(--cream);
 }
