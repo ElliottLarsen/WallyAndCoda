@@ -85,7 +85,7 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
 - Records can be created using record type, record date, doctor's name, address, and phone number of the vet clinic, and additional notes.
 - As with the pup profiles, individual records can be removed.
 
-## GIF Walkthroughs
+## GIF Walkthroughs (UI update in progress...)
 
 ### User Registration and Authentication
 <p>
