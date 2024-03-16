@@ -44,7 +44,7 @@ def update_pup(
     pup: Pup,
 ) -> Pup:
     """
-    Update pup
+    Updates pup
     """
     pup = get_pup_by_id(db, pup.id)
     pup.pup_name = pup_update.pup_name
@@ -61,6 +61,9 @@ def remove_pup(
     db: Session,
     pup: Pup,
 ) -> None:
+    """
+    Deletes a pup
+    """
     db.delete(pup)
     db.commit()
 
@@ -100,6 +103,9 @@ def get_user_pups(db: Session, user: User):
 
 
 def create_record(db: Session, pup: Pup, record_create: RecordCreate):
+    """
+    Creates a record for a given pup
+    """
     db_record = Record(
         id=str(uuid.uuid4()),
         record_type=record_create.record_type,
@@ -120,6 +126,9 @@ def create_record(db: Session, pup: Pup, record_create: RecordCreate):
 
 
 def update_record(db: Session, record_update: RecordUpdate, record: Record):
+    """
+    Updates a record
+    """
     record = get_record_by_id(db, record.id)
     record.record_type = record_update.record_type
     record.record_date = record_update.record_date
@@ -135,23 +144,36 @@ def update_record(db: Session, record_update: RecordUpdate, record: Record):
 
 
 def delete_record(db: Session, record: Record):
+    """
+    Deletes a record
+    """
     db.delete(record)
     db.commit()
 
 
 def get_record_by_id(db: Session, record_id: str) -> Record | None:
+    """
+    Returns a record
+    """
     return db.query(Record).filter(Record.id == record_id).first()
 
 
 def get_records_by_pup_id(db: Session, pup_id: str):
+    """
+    Returns all records that are associated with the given pup
+    """
     return db.query(Record).filter(Record.pup_id == pup_id).all()
 
 
 def get_one_record(db: Session, record_id: str):
+    #TODO: Duplicate
     return db.query(Record).filter(Record.id == record_id).first()
 
 
 def create_reminder(db: Session, pup: Pup, reminder_create: ReminderCreate):
+    """
+    Creates a reminder for a given pup
+    """
     db_reminder = Reminder(
         id=str(uuid.uuid4()),
         reminder_date=reminder_create.reminder_date,
@@ -168,6 +190,9 @@ def create_reminder(db: Session, pup: Pup, reminder_create: ReminderCreate):
 
 
 def update_reminder(db: Session, reminder_update: ReminderUpdate, reminder: Reminder):
+    """
+    Updates a reminder
+    """
     reminder = get_reminder_by_id(db, reminder.id)
     reminder.reminder_date = reminder_update.reminder_date
     reminder.reminder_note = reminder_update.reminder_note
@@ -180,25 +205,37 @@ def update_reminder(db: Session, reminder_update: ReminderUpdate, reminder: Remi
 
 
 def delete_reminder(db: Session, reminder: Reminder):
+    """
+    Deletes a reminder
+    """
     db.delete(reminder)
     db.commit()
 
 
 def get_reminder_by_id(db: Session, reminder_id: str) -> Reminder | None:
+    """
+    Returns a reminder
+    """
     return db.query(Reminder).filter(Reminder.id == reminder_id).first()
 
 
 def get_reminder_by_pup_id(db: Session, pup_id: str):
+    """
+    Returns all reminders that are associated with the given pup
+    """
     return db.query(Reminder).filter(Reminder.pup_id == pup_id).all()
 
 
 def get_one_reminder(db: Session, reminder_id: str):
+    # TODO: Duplicate
     return db.query(Reminder).filter(Reminder.id == reminder_id).first()
 
 
 def get_all_records_all(db: Session):
+    # TODO: Test function - to be removed.
     return db.query(Record).all()
 
 
 def get_all_reminders_all(db: Session):
+    # TODO: Test function - to be removed.
     return db.query(Reminder).all()

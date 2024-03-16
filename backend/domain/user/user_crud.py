@@ -102,6 +102,9 @@ def update_login_attempts(
     login_attempts: int = 0,
     last_login_attempt: datetime = None,
 ) -> None:
+    """
+    Updates login attempts
+    """
     user = get_user_by_username(db, current_user.username)
     user.login_attempts += login_attempts
     if last_login_attempt:
@@ -111,6 +114,9 @@ def update_login_attempts(
 
 
 def check_login_attempts(db: Session, current_user: User):
+    """
+    After 3 unsuccessful login attempts, blocks the user for 10 minutes.
+    """
     if current_user.login_attempts == 3:
         if datetime.utcnow() < current_user.last_login_attempt:
             remainder = (
@@ -130,11 +136,18 @@ def check_login_attempts(db: Session, current_user: User):
 
 
 def remove_user(db: Session, current_user: User) -> None:
+    """
+    Remmoves the currently logged in user.
+    """
     db.delete(current_user)
     db.commit()
 
 
 def validate_user(db: Session, current_user: User) -> None:
+    """
+    Validates user.
+    """
+    # TODO: Bring it back in prod.
     return
     all_users = db.query(User).all()
     if len(all_users) > 2 or current_user.email not in ACCEPTED_EMAILS:
