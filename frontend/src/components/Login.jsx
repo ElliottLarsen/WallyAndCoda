@@ -49,7 +49,7 @@ export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a 
                         
                         <label htmlFor="password">Password: </label>
                         <input id="password" type="password" placeholder="password" name="password" value={loginData.password} onChange={handleChange} required />
-                        
+                        <br></br>
                         <button type="submit">Login</button>
                         </fieldset>
                     </form>

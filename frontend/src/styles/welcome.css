@@ -21,29 +21,51 @@ body {
 
 header {
     display: flex;
-    /* text-align: center; */
-    color: var(--cream);
-    background-color: var(--brown);
-    margin: 1% 0;
-    padding: 2%;
+    align-items: center;
+
 }
 
-main {
-    margin:;
-    padding:0 25px;
-}
+.navbar {
+    
+    display:flex;
+    width: 100%;
+    height: 65px;
+   
+    padding: 2%;
+    margin-bottom: 1%;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--cream);
+    background-color: var(--brown);
+
+}    
+main { padding:0 25px; }
 
 footer {
     text-align: center;
     color:var(--brown);
+    font-weight: 700;
     padding:2%;
 }
+
+img { width: 700px;}
 
 .flex-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/* Old flex container */
+/* .flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 80vh;
+} */
+
+h2 {
+    text-align: center;
+    padding:2%;
 }
 
 .square {
@@ -73,10 +95,9 @@ footer {
 .App-nav nav{
     
     display: flex;
-    justify-content: right;
-    /* padding-top: 2rem; */
+    align-items: center;
+    /* justify-content: center; */
     padding:  2%;
-    /* margin: 1%; */
     font-size: 1.3rem;
     color: var(--plum);
 }
@@ -91,9 +112,9 @@ footer {
 
 .App-nav a:hover {color:var(--lightblue);}
 
-.App-nav a:active { color:var(--brown);}
+.App-nav a:active { color:var(--black);}
 
-.App-nav a:visited {color:var(--plum);}
+.App-nav a:visited {color:var(--cream);}
 
 form{
     font-family: "Nunito Sans", sans-serif;
