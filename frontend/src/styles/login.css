@@ -34,20 +34,6 @@ body {
     text-align: center;
 }
 
-.App-nav {
-    display: flex;
-    justify-content: center;
-    padding-top: 2rem;
-    font-size: 1.3rem;
-}
-
-.App-nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-}
-
-
 hr {
     width: 15rem;
 }
