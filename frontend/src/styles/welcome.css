@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 :root {
-    --brown:     rgba(202, 119, 110);
-    --plum:      rgba(143, 97, 132);
-    --bluegray:  rgba(69, 83, 111);
-    --lightblue: rgba(0, 176, 255);
-    --lightblueT:  rgba(0, 176, 255,0.3);
-    --cream:     rgba(249,249,247);
-    --gray:      rgba(129, 133, 137);
-    --grayT:     rgba(129, 133, 137, 0.3);
-    --black:     rgba(35,43,43);
+    --brown:        rgba(202, 119, 110);
+    --brownT:       rgba(202,119,110, 0.3);
+    --plum:         rgba(143, 97, 132);
+    --bluegray:     rgba(69, 83, 111);
+    --lightblue:    rgba(0, 176, 255);
+    --lightblueT:   rgba(0, 176, 255,0.3);
+    --cream:        rgba(249,249,247);
+    --gray:         rgba(129, 133, 137);
+    --grayT:        rgba(129, 133, 137, 0.3);
+    --black:        rgba(35,43,43);
 }
 
 html,
@@ -21,15 +22,12 @@ body {
 
 header {
     display: flex;
-    /* text-align: center; */
     color: var(--cream);
     background-color: var(--brown);
-    /* margin: 1% 0; */
     padding: 2%;
 }
 
 main {
-    margin:;
     padding:0 25px;
 }
 
@@ -70,30 +68,39 @@ footer {
     text-align: center;
 }
 
-.App-nav nav{
-    
+.App-nav {
+    height: 50px;
     display: flex;
-    justify-content: right;
-    /* padding-top: 2rem; */
-    padding:  2%;
-    /* margin: 1%; */
-    font-size: 1.3rem;
-    color: var(--plum);
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    text-transform: lowercase;
 }
 
 .App-nav a {
-    margin: 0 10px;
-    /* Add margin between links */
+    margin: 0 15px;
     text-decoration: none;
     color:var(--black);
-    /* Set link color */
+
 }
 
-.App-nav a:hover {color:var(--lightblue);}
+.App-nav a:hover {
+    color:var(--black);
+    border: 3px solid var(--plum);
+    border-radius: 10px;
+    padding: 5px 15px;
+    
+}
 
-.App-nav a:active { color:var(--brown);}
+.App-nav a:active { color:var(--black);}
 
-.App-nav a:visited {color:var(--plum);}
+.App-nav a:visited {color:var(--black);}
+
+.pup-record {
+    font-size: 1rem;
+}
 
 form{
     font-family: "Nunito Sans", sans-serif;
@@ -103,15 +110,20 @@ form{
 
 label {
     display: inline-block;
-    width: 15rem;
+    justify-items: center;
+    text-align: right;
+    width: 9rem;
     padding: 1%;
-    font-size: 1.3rem;
-    color: var(--black)
+    margin: 1%;
+    font-weight: 700;
+    font-size: 90%;
+    color: var(--bluegray);
+    text-transform: uppercase;
 }
 
 label.required:after{
     content:"*"; 
-    color:var(--bluegray);
+    color:var(--lightblue);
 }
 
 fieldset{
@@ -121,23 +133,34 @@ fieldset{
 input {
     font-family: "Nunito Sans", sans-serif ;
     font-size: 110%;
-    width: 13rem;
+    padding:1%;
+    margin:1%;
+    width: 14rem;
     height: 1.5rem;
-    padding: 0.75%;
     border-radius: 5px;
     border: 1px solid var(--black);
-    font-size: 110%;
-    color: var(--bluegray);
+    color: var(--gray);
 }
+
+input:focus{
+    background-color: var(--brownT);
+    border: 2px solid var(--brown);
+    border-color: var(--black);
+    color:var(--black);
+}
+
+select { 
+    border-radius: 5px;
+    min-width: 215px; 
+    font-size: 110%;}
 
 button {
     float: right;
     background-color: var(--plum);
-    border: 2px solid var(--black);
-    border-radius: 5px;
+    border: 3px solid var(--plum);
+    border-radius: 10px;
     color: var(--cream);
-    border: none;
-    font-size: 1.3rem;
+    font-size: 1rem;
     line-height: 2;
     padding: 0 1.5rem;
     margin: 1rem;
@@ -145,13 +168,10 @@ button {
 }
 
 button:hover{
-
-    background-color: var(--grayT);
+    background-color: var(--cream);
     color: var(--plum);
-    border: 2px solid var(--black);
+    border: 2px solid var(--plum);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-input:focus{
-    background-color: var(--lightblueT);
-    color:var(--cream);
-}

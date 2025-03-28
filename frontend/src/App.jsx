@@ -10,6 +10,7 @@ import Logout from './components/Logout'; // Import the Logout component
 import MyPups from './components/MyPups';
 import PupRecords from './components/PupRecords';
 
+import './styles/welcome.css'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initially, the user is not logged in

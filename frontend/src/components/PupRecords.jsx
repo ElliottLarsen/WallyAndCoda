@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import '../styles/puprecords.css';
+// import '../styles/puprecords.css';
 
 const PupRecords = () => {
     const navigateTo = useNavigate();
@@ -122,7 +122,7 @@ const PupRecords = () => {
         <div className='flex-container'>
             <div className='squre white'>
                 <div className="pup-dropdown">
-                    <label htmlFor="pup">Select a Pup:</label>
+                    <label style={{textAlign:'center'}} htmlFor="pup">Select a Pup</label>
                     <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
                         {pups.map(pup => (
                             <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
