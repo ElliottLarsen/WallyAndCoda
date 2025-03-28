@@ -28,8 +28,8 @@ function App() {
         <div>
           <h1>Wally & Coda</h1>
         </div>
-        </header>
-       
+      </header>
+
       <nav className="App-nav">
         {/* Conditional rendering based on the authentication state */}
         {isLoggedIn ? (

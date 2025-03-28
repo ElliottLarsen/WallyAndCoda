@@ -6,6 +6,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 // import '../styles/puprecords.css';
 
 import AddPupRecord from './AddPupRecord';
+import ContentCard from './ContentCard';
 
 
 const PupRecords = () => {
@@ -13,15 +14,9 @@ const PupRecords = () => {
     const [pups, setPups] = useState([]);
     const [selectedPup, setSelectedPup] = useState('');
     const [records, setRecords] = useState([]);
-    const [recordFormData, setRecordFormData] = useState({
-        record_type: '',
-        record_date: '',
-        doctor_name: '',
-        vet_address: '',
-        vet_phone_number: '',
-        cost: '',
-        record_note: ''
-    });
+
+    const [newRecordTab, setNewRecordTab] = useState();
+    const [isActive, setIsActive] = useState('pupDisplay');
 
     useEffect(() => {
         fetchPups();
@@ -69,43 +64,6 @@ const PupRecords = () => {
         fetchRecords(value);
     };
 
-    // const handleRecordChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setRecordFormData({
-    //         ...recordFormData,
-    //         [name]: value
-    //     });
-    // };
-
-    // const handleRecordSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const token = localStorage.getItem('token');
-    //         await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${selectedPup}`, {
-    //             ...recordFormData,
-    //             cost: parseFloat(recordFormData.cost) // Convert cost to float
-    //         }, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         });
-    //         // Clear record form data
-    //         setRecordFormData({
-    //             record_type: '',
-    //             record_date: '',
-    //             doctor_name: '',
-    //             vet_address: '',
-    //             vet_phone_number: '',
-    //             cost: '',
-    //             record_note: ''
-    //         });
-    //         // Fetch records again to update UI
-    //         fetchRecords(selectedPup);
-    //     } catch (error) {
-    //         console.error('Error adding record:', error);
-    //     }
-    // };
-
     const handleDeleteRecord = async (record_id) => {
         try {
             const token = localStorage.getItem('token');
@@ -121,29 +79,53 @@ const PupRecords = () => {
         }
     };
 
+    function handleClick(value) {
+        setIsActive(value);
+    }
+
+    let pupDropdown = (
+        <>
+            <label style={{ textAlign: 'center' }} htmlFor="pup">Select a Pup</label>
+            <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
+                {pups.map(pup => (
+                    <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
+                ))}
+            </select>
+        </>
+    );
+
+    let pupRecord = (
+        <>
+            <ul>
+            {records.map(record => (
+                <li className='pup-record' key={record.id}>
+                    <span>{record.record_type} - {record.record_date.split('T')[0]} - Dr. {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - ${record.cost} - {record.record_note}</span>
+                    <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id)} />
+                </li>
+            ))}
+            </ul>
+        </>
+    );
+
     return (
+
         <div className='flex-container'>
-            <div className='squre white'>
-                <div className="pup-dropdown">
-                    <label style={{textAlign:'center'}} htmlFor="pup">Select a Pup</label>
-                    <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
-                        {pups.map(pup => (
-                            <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
-                        ))}
-                    </select>
+            {(isActive === 'pupDisplay') ? (
+                <>
+                    <div className='add-button'>
+                        <button onClick={() => handleClick('addRecord')}>+ new record</button>
+                    </div>
+                    <div className='square white'>
+                        <ContentCard className={'pup-dropdown'} content={pupDropdown} />
+                        <ContentCard className={'pup-record'} content={pupRecord} />
+                    </div>
+                </>
+
+            ) : (
+                <div className='square white'>
+                    <AddPupRecord choosenPup={selectedPup} isActive={isActive} setIsActive={setIsActive} />
                 </div>
-                <ul>
-                    {records.map(record => (
-                        <li className='pup-record' key={record.id}>
-                            <span>{record.record_type} - {record.record_date.split('T')[0]} - Dr. {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - ${record.cost} - {record.record_note}</span>
-                            <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id)} />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className='square white'>
-                <AddPupRecord choosenPup={selectedPup} />
-            </div>
+            )}
         </div>
     );
 };

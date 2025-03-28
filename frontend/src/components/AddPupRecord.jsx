@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { isValidElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-export default function AddPupRecord({choosenPup}) {
+export default function AddPupRecord({ choosenPup, isActive, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
+    const navigateTo = useNavigate();
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
         record_date: '',
@@ -43,15 +44,20 @@ export default function AddPupRecord({choosenPup}) {
                 cost: '',
                 record_note: ''
             });
-            // navigate back to pup? 
-            // Fetch records again to update UI
-            // fetchRecords(selectedPup);
+            alert('Record added!')
+            setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error adding record:', error);
         }
     };
 
+    function handleClick() {
+        setIsActive('pupDisplay');
+    }
+
     return (
+        <>
+        <button onClick={handleClick}>go back</button>
         <form onSubmit={handleSubmit}>
             <fieldset>
                 <label htmlFor="record_type">Record Type: </label>
@@ -117,5 +123,6 @@ export default function AddPupRecord({choosenPup}) {
                 <button type="submit">Add Record</button>
             </fieldset>
         </form>
+        </>
     );
 }
