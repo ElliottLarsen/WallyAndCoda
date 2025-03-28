@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 // import '../styles/puprecords.css';
 
+import AddPupRecord from './AddPupRecord';
+
+
 const PupRecords = () => {
     const navigateTo = useNavigate();
     const [pups, setPups] = useState([]);
@@ -66,42 +69,42 @@ const PupRecords = () => {
         fetchRecords(value);
     };
 
-    const handleRecordChange = (e) => {
-        const { name, value } = e.target;
-        setRecordFormData({
-            ...recordFormData,
-            [name]: value
-        });
-    };
+    // const handleRecordChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setRecordFormData({
+    //         ...recordFormData,
+    //         [name]: value
+    //     });
+    // };
 
-    const handleRecordSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const token = localStorage.getItem('token');
-            await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${selectedPup}`, {
-                ...recordFormData,
-                cost: parseFloat(recordFormData.cost) // Convert cost to float
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            // Clear record form data
-            setRecordFormData({
-                record_type: '',
-                record_date: '',
-                doctor_name: '',
-                vet_address: '',
-                vet_phone_number: '',
-                cost: '',
-                record_note: ''
-            });
-            // Fetch records again to update UI
-            fetchRecords(selectedPup);
-        } catch (error) {
-            console.error('Error adding record:', error);
-        }
-    };
+    // const handleRecordSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const token = localStorage.getItem('token');
+    //         await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${selectedPup}`, {
+    //             ...recordFormData,
+    //             cost: parseFloat(recordFormData.cost) // Convert cost to float
+    //         }, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         });
+    //         // Clear record form data
+    //         setRecordFormData({
+    //             record_type: '',
+    //             record_date: '',
+    //             doctor_name: '',
+    //             vet_address: '',
+    //             vet_phone_number: '',
+    //             cost: '',
+    //             record_note: ''
+    //         });
+    //         // Fetch records again to update UI
+    //         fetchRecords(selectedPup);
+    //     } catch (error) {
+    //         console.error('Error adding record:', error);
+    //     }
+    // };
 
     const handleDeleteRecord = async (record_id) => {
         try {
@@ -139,23 +142,7 @@ const PupRecords = () => {
                 </ul>
             </div>
             <div className='square white'>
-                <form onSubmit={handleRecordSubmit}>
-                    <label htmlFor="record_type">Record Type: </label>
-                    <input type="text" name="record_type" placeholder="Record Type" value={recordFormData.record_type} onChange={handleRecordChange} required />
-                    <label htmlFor="record_date">Record Date: </label>
-                    <input type="date" name="record_date" value={recordFormData.record_date} onChange={handleRecordChange} required />
-                    <label htmlFor="doctor_name">Doctor: </label>
-                    <input type="text" name="doctor_name" placeholder="Doctor Name" value={recordFormData.doctor_name} onChange={handleRecordChange} required />
-                    <label htmlFor="vet_address">Address: </label>
-                    <input type="text" name="vet_address" placeholder="Vet Address" value={recordFormData.vet_address} onChange={handleRecordChange} required />
-                    <label htmlFor="vet_phone_number">Phone Number: </label>
-                    <input type="text" name="vet_phone_number" placeholder="Vet Phone Number" value={recordFormData.vet_phone_number} onChange={handleRecordChange} required />
-                    <label htmlFor="cost">Cost: </label>
-                    <input type="text" name="cost" placeholder="Cost" value={recordFormData.cost} onChange={handleRecordChange} required />
-                    <label htmlFor="record_note">Note: </label>
-                    <input type="text" name="record_note" placeholder="Record Note" value={recordFormData.record_note} onChange={handleRecordChange} />
-                    <button type="submit">Add Record</button>
-                </form>
+                <AddPupRecord choosenPup={selectedPup} />
             </div>
         </div>
     );
