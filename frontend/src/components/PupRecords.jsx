@@ -99,11 +99,10 @@ const PupRecords = () => {
                         <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
                     </div>
                     <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
-                    
+                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} /> 
                 </>
             ) : (
-                <div className='container'>
+                <div>
                     <AddPupRecord choosenPup={selectedPup} isActive={isActive} setIsActive={setIsActive} />
                 </div>
             )}

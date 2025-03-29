@@ -44,10 +44,8 @@ footer {
     justify-content: center;
     align-items: center;
 }
-
-.container form {
-    height: 70vh;
-    width: 70vh;
+.mini-nav-button {
+    margin:0.75rem;
 }
 .pup-dropdown {
     padding-bottom: 3%;
@@ -63,8 +61,8 @@ footer {
 }
 
 .square {
-    height: 70vh;
-    width: 70vh;
+    height: 55vh;
+    width: 55vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,6 +74,8 @@ footer {
     color: var(--cream);
     text-align: center;
 }
+
+hr { width:15rem;}
 
 .brown {
     background-color: var(--brown);
@@ -121,22 +121,20 @@ footer {
 }
 
 form{
+    width: 90%;
+    max-width: 40rem;
     font-family: "Nunito Sans", sans-serif;
-    border-radius: 5px;
-    margin: 1%;
+    margin: 1rem auto;
 }
 
+
 label {
-    display: inline-block;
-    justify-items: center;
-    text-align: right;
-    width: 9rem;
-    padding: 1%;
-    margin: 1%;
+    display: block;
     font-weight: 700;
     font-size: 90%;
     color: var(--bluegray);
     text-transform: uppercase;
+    /* text-align: center; */
 }
 
 label.required:after{
@@ -180,8 +178,9 @@ button {
     color: var(--cream);
     font-size: 1rem;
     line-height: 2;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     margin: 1rem;
+    width:fit-content;
     cursor: pointer;
 }
 
