@@ -1,10 +1,8 @@
-import { isValidElement, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from 'axios';
 
-export default function AddPupRecord({ choosenPup, isActive, setIsActive }) {
+export default function AddPupRecord({ choosenPup, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
-    const navigateTo = useNavigate();
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
         record_date: '',

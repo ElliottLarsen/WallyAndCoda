@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-// import '../styles/puprecords.css';
 
 import AddPupRecord from './AddPupRecord';
+import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
 
 
@@ -15,7 +13,6 @@ const PupRecords = () => {
     const [selectedPup, setSelectedPup] = useState('');
     const [records, setRecords] = useState([]);
 
-    const [newRecordTab, setNewRecordTab] = useState();
     const [isActive, setIsActive] = useState('pupDisplay');
 
     useEffect(() => {
@@ -94,33 +91,18 @@ const PupRecords = () => {
         </>
     );
 
-    let pupRecord = (
-        <>
-            <ul>
-            {records.map(record => (
-                <li className='pup-record' key={record.id}>
-                    <span>{record.record_type} - {record.record_date.split('T')[0]} - Dr. {record.doctor_name} - {record.vet_address} - {record.vet_phone_number} - ${record.cost} - {record.record_note}</span>
-                    <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDeleteRecord(record.id)} />
-                </li>
-            ))}
-            </ul>
-        </>
-    );
-
     return (
-
         <div className='flex-container'>
             {(isActive === 'pupDisplay') ? (
                 <>
-                    <div className='add-button'>
-                        <button onClick={() => handleClick('addRecord')}>+ new record</button>
+                    <div>
+                        <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
                     </div>
-                    <div className='square white'>
+                    <div>
                         <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                        <ContentCard className={'pup-record'} content={pupRecord} />
+                        <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
                     </div>
                 </>
-
             ) : (
                 <div className='square white'>
                     <AddPupRecord choosenPup={selectedPup} isActive={isActive} setIsActive={setIsActive} />
