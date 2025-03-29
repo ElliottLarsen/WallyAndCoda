@@ -5,7 +5,6 @@ import Welcome from './components/Welcome';
 import Register from './components/Register';
 import Login from './components/Login';
 import User from './components/User';
-import Pup from './components/Pup';
 import Logout from './components/Logout'; // Import the Logout component
 import MyPups from './components/MyPups';
 import PupRecords from './components/PupRecords';
@@ -47,6 +46,7 @@ function App() {
           </>
         )}
       </nav>
+      <main>
       <Routes>
         <Route path='/' element={<Welcome />} />
         <Route path='/register' element={<Register />} />
@@ -56,6 +56,7 @@ function App() {
         <Route path='/my_pups' element={<MyPups />} />
         <Route path='/logout' element={<Logout setIsLoggedIn={setIsLoggedIn} />} /> {/* Pass setIsLoggedIn to Logout component */}
       </Routes>
+      </main>
       <footer>
         <p>&copy;2024 ELD</p>
       </footer>

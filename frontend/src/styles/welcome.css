@@ -28,7 +28,8 @@ header {
 }
 
 main {
-    padding:0 25px;
+    /* padding:0 25px; */
+    height: 80vh;
 }
 
 footer {
@@ -36,6 +37,23 @@ footer {
     color:var(--brown);
     padding:2%;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container form {
+    height: 70vh;
+    width: 70vh;
+}
+.pup-dropdown {
+    padding-bottom: 3%;
+    text-align: center;
+}
+
 
 .flex-container {
     display: flex;

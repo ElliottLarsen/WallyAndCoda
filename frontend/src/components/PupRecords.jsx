@@ -82,7 +82,7 @@ const PupRecords = () => {
 
     let pupDropdown = (
         <>
-            <label style={{ textAlign: 'center' }} htmlFor="pup">Select a Pup</label>
+            <label style={{textAlign: 'center'}} htmlFor="pup">Select a Pup</label>
             <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
                 {pups.map(pup => (
                     <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
@@ -92,19 +92,18 @@ const PupRecords = () => {
     );
 
     return (
-        <div className='flex-container'>
+        <div className='container'>
             {(isActive === 'pupDisplay') ? (
                 <>
                     <div>
                         <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
                     </div>
-                    <div>
-                        <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                        <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
-                    </div>
+                    <ContentCard className={'pup-dropdown'} content={pupDropdown} />
+                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
+                    
                 </>
             ) : (
-                <div className='square white'>
+                <div className='container'>
                     <AddPupRecord choosenPup={selectedPup} isActive={isActive} setIsActive={setIsActive} />
                 </div>
             )}

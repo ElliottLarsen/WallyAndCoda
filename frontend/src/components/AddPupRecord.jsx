@@ -55,7 +55,9 @@ export default function AddPupRecord({ choosenPup, setIsActive }) {
 
     return (
         <>
+        
         <button onClick={handleClick}>go back</button>
+        
         <form onSubmit={handleSubmit}>
             <fieldset>
                 <label htmlFor="record_type">Record Type: </label>
