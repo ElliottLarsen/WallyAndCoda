@@ -90,7 +90,7 @@ const User = () => {
                 <h1>User Information</h1>
                 <hr />
             </div>
-            <div className='square white'>
+            <div>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="username">Username: </label>
                     <input type="text" name="username" value={formData.username} onChange={handleChange} />
