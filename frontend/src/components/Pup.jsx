@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../styles/welcome.css'
-// import '../styles/puprecords.css'
+
 
 const Pup = () => {
     const navigateTo = useNavigate();
