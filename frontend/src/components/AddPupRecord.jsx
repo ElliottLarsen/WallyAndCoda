@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 
-export default function AddPupRecord({ choosenPup, setIsActive }) {
+export default function AddPupRecord({ choosenPup, updateRecords, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
@@ -42,7 +42,8 @@ export default function AddPupRecord({ choosenPup, setIsActive }) {
                 cost: '',
                 record_note: ''
             });
-            alert('Record added!')
+            // alert('Record added!')
+            updateRecords(choosenPup);
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error adding record:', error);

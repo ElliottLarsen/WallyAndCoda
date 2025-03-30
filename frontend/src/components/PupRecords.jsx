@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import AddPupRecord from './AddPupRecord';
 import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
-
+import PupDropdown from './PupDropdown';
 
 const PupRecords = () => {
     const navigateTo = useNavigate();
@@ -81,14 +81,8 @@ const PupRecords = () => {
     }
 
     let pupDropdown = (
-        <>
-            <label style={{textAlign: 'center'}} htmlFor="pup">Select a Pup</label>
-            <select id="pup" name="pup" value={selectedPup} onChange={handlePupChange}>
-                {pups.map(pup => (
-                    <option key={pup.id} value={pup.id}>{pup.pup_name}</option>
-                ))}
-            </select>
-        </>
+        <PupDropdown pups={pups} selectPup={selectedPup} handleChange={handlePupChange}/>
+
     );
 
     return (
@@ -103,7 +97,7 @@ const PupRecords = () => {
                 </>
             ) : (
                 <div>
-                    <AddPupRecord choosenPup={selectedPup} setIsActive={setIsActive} />
+                    <AddPupRecord choosenPup={selectedPup} updateRecords={fetchRecords} setIsActive={setIsActive} />
                 </div>
             )}
         </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function AddPup({ setIsActive }) {
+export default function AddPup({ updatePups, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [formData, setFormData] = useState({
         pup_name: '',
@@ -36,6 +36,7 @@ export default function AddPup({ setIsActive }) {
                 akc_registration_name: ''
             });
             alert('Pup added!')
+            updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error adding pup:', error);
