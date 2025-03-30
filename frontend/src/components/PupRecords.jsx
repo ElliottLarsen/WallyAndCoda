@@ -103,7 +103,7 @@ const PupRecords = () => {
                 </>
             ) : (
                 <div>
-                    <AddPupRecord choosenPup={selectedPup} isActive={isActive} setIsActive={setIsActive} />
+                    <AddPupRecord choosenPup={selectedPup} setIsActive={setIsActive} />
                 </div>
             )}
         </div>
