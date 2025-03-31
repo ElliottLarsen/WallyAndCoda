@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { createPortal } from 'react-dom';
 
 export default function PupModal({ close, currentPup }) {
     const dialog = useRef();
@@ -18,16 +19,33 @@ export default function PupModal({ close, currentPup }) {
         return null;
     }
 
-    return (
-        <dialog onClose={handleClose} ref={dialog}>
+    return createPortal(
+        <dialog onClose={handleClose} ref={dialog} className="pup-modal">
             <h2>{currentPup.pup_name}</h2>
-            <p>Sex: {currentPup.pup_sex}</p>
-            <p>Microchip Number: {currentPup.microchip_number}</p>
-            <p>AKC Registration Number: {currentPup.akc_registration_number}</p>
-            <p>AKC Registration Name: {currentPup.akc_registration_name}</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Sex:</th>
+                        <td>{currentPup.pup_sex}</td>
+                    </tr>
+                    <tr>
+                        <th>Microchip Number:</th>
+                        <td>{currentPup.microchip_number}</td>
+                    </tr>
+                    <tr>
+                        <th>AKC Registration Number:</th>
+                        <td>{currentPup.akc_registration_number}</td>
+                    </tr>
+                    <tr>
+                        <th>AKC Registration Name:</th>
+                        <td>{currentPup.akc_registration_name}</td>
+                    </tr>
+                </tbody>
+            </table>
             <form method='dialog'>
-                <button onClick={handleClose}>Close</button>
+                <button className="exit-button" onClick={handleClose}>Close</button>
             </form>
-        </dialog>
+        </dialog>,
+        document.getElementById('modal')
     );
 }
