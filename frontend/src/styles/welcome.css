@@ -52,7 +52,6 @@ footer {
     text-align: center;
 }
 
-
 .flex-container {
     display: flex;
     justify-content: center;
@@ -79,7 +78,6 @@ hr { width:15rem;}
 
 .brown {
     background-color: var(--brown);
-    
 }
 
 .white {
@@ -101,24 +99,70 @@ hr { width:15rem;}
     margin: 0 15px;
     text-decoration: none;
     color:var(--black);
-
 }
 
 .App-nav a:hover {
     color:var(--black);
     border: 3px solid var(--plum);
     border-radius: 10px;
-    padding: 5px 15px;
-    
+    padding: 5px 15px;  
 }
 
-.App-nav a:active { color:var(--black);}
+.App-nav a:active { 
+    color:var(--black);
+    border-bottom: var(--plum);
+}
 
 .App-nav a:visited {color:var(--black);}
 
 .pup-record {
     font-size: 1rem;
 }
+
+.my-pups th {
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 1.25rem;
+    color: var(--black);
+}
+
+.pup-modal {
+    border: 2px solid var(--brown);
+    width: 25rem;
+}
+
+.pup-modal h2 {
+    margin: 0 0 0.25rem 0;
+    font-size:2rem;
+    text-align: center;
+}
+
+.pup-modal table {
+    display: flex;
+    justify-content: center;
+}
+
+.pup-modal th {
+    display: block;
+    font-weight: 700;
+    font-size: 90%;
+    color: var(--bluegray);
+    text-transform: uppercase;
+    text-align:left;
+}
+
+.pup-modal td {
+    text-align: right ;
+}
+
+.pup-modal::backdrop { background: rgba(129, 133, 137,0.9)}
+
+.pup-modal button.exit-button {
+    border: 2px solid var(--black);
+    background-color: var(--black);
+    color: white;
+}
+
 
 form{
     width: 90%;
@@ -188,7 +232,7 @@ button:hover{
     background-color: var(--cream);
     color: var(--plum);
     border: 2px solid var(--plum);
-    font-weight: 700;
-    letter-spacing: 1px;
+    /* font-weight: 700; */
+    /* letter-spacing: 1px; */
 }
 

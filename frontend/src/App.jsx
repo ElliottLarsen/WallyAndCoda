@@ -58,7 +58,7 @@ function App() {
       </Routes>
       </main>
       <footer>
-        <p>&copy;2024 ELD</p>
+        <p>&copy;2025 ELD</p>
       </footer>
     </>
   );
