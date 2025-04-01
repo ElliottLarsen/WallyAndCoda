@@ -15,10 +15,6 @@ export default function PupModal({ close, content }) {
         if (close) close();
     };
 
-    // if (!content) {
-    //     return null;
-    // }
-
     return createPortal(
         <dialog onClose={handleClose} ref={dialog} className="pup-modal">
             {content}

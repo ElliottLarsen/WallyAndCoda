@@ -7,6 +7,7 @@ import '../styles/mypups.css'
 
 import AddPup from './AddPup';
 import DisplayPup from './DisplayPup';
+import EditPup from './EditPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
 
@@ -60,6 +61,7 @@ const MyPups = () => {
     const handleEditClick = (pup, value) => {
         setIsActive(value);
         setSelectedPup(pup);
+        fetchPups();
     }
 
     function handleClick(value) {
@@ -126,7 +128,8 @@ const MyPups = () => {
                 </div>
             ):(
                 <div>
-                    <p>Edit {selectedPup.pup_name} here!</p>
+                    <EditPup updatePups={fetchPups} pup_id={selectedPup.id} setIsActive={setIsActive} />
+                    {/* <p>Edit {selectedPup.pup_name} here!</p> */}
                 </div>
             ))}
         </div>
