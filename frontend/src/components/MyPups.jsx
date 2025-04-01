@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/mypups.css'
 
-import AddPup from './AddPup';
+import PupForm from './PupForm';
 import DisplayPup from './DisplayPup';
-import EditPup from './EditPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
 
@@ -89,9 +88,9 @@ const MyPups = () => {
                 <tbody>
                     {pups.map(pup => (
                         <tr key={pup.id}>
-                            <th style={{cursor:"pointer"}} onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
-                            <td style={{cursor:"pointer"}}>
-                                <FontAwesomeIcon 
+                            <th style={{ cursor: "pointer" }} onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
+                            <td style={{ cursor: "pointer" }}>
+                                <FontAwesomeIcon
                                     icon={faEdit}
                                     onClick={() => handleEditClick(pup, 'editPup')}
                                 />
@@ -105,7 +104,7 @@ const MyPups = () => {
                     ))}
                 </tbody>
             </table>
-            
+
             {activeModal && selectedPup && (
                 <PupModal content={displayPup} close={closePupModal} />
             )}
@@ -122,14 +121,22 @@ const MyPups = () => {
                     </div>
                     <ContentCard className={"my-pups"} content={myPups} />
                 </div>
-            ) : ( (isActive !== 'editPup') ? (
+            ) : ((isActive !== 'editPup') ? (
                 <div>
-                    <AddPup updatePups={fetchPups} setIsActive={setIsActive} />
+                    <PupForm
+                        httpType={'post'}
+                        updatePups={fetchPups}
+                        setIsActive={setIsActive}
+                    />
                 </div>
-            ):(
+            ) : (
                 <div>
-                    <EditPup updatePups={fetchPups} pup_id={selectedPup.id} setIsActive={setIsActive} />
-                    {/* <p>Edit {selectedPup.pup_name} here!</p> */}
+                    <PupForm
+                        httpType={'put'}
+                        updatePups={fetchPups}
+                        pup_id={selectedPup.id}
+                        setIsActive={setIsActive}
+                    />
                 </div>
             ))}
         </div>
