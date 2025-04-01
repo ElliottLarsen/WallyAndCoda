@@ -6,6 +6,7 @@ import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/mypups.css'
 
 import AddPup from './AddPup';
+import DisplayPup from './DisplayPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
 
@@ -56,6 +57,11 @@ const MyPups = () => {
         }
     };
 
+    const handleEditClick = (pup, value) => {
+        setIsActive(value);
+        setSelectedPup(pup);
+    }
+
     function handleClick(value) {
         setIsActive(value);
     }
@@ -70,6 +76,10 @@ const MyPups = () => {
         setSelectedPup(null);
     }
 
+    let displayPup = (
+        <DisplayPup currentPup={selectedPup} />
+    );
+
     // This can be extracted into its own component
     let myPups = (
         <>
@@ -79,6 +89,10 @@ const MyPups = () => {
                         <tr key={pup.id}>
                             <th style={{cursor:"pointer"}} onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
                             <td style={{cursor:"pointer"}}>
+                                <FontAwesomeIcon 
+                                    icon={faEdit}
+                                    onClick={() => handleEditClick(pup, 'editPup')}
+                                />
                                 <FontAwesomeIcon
                                     className='trash'
                                     icon={faTrash}
@@ -91,7 +105,7 @@ const MyPups = () => {
             </table>
             
             {activeModal && selectedPup && (
-                <PupModal currentPup={selectedPup} close={closePupModal} />
+                <PupModal content={displayPup} close={closePupModal} />
             )}
         </>
     );
@@ -106,11 +120,15 @@ const MyPups = () => {
                     </div>
                     <ContentCard className={"my-pups"} content={myPups} />
                 </div>
-            ) : (
+            ) : ( (isActive !== 'editPup') ? (
                 <div>
                     <AddPup updatePups={fetchPups} setIsActive={setIsActive} />
                 </div>
-            )}
+            ):(
+                <div>
+                    <p>Edit {selectedPup.pup_name} here!</p>
+                </div>
+            ))}
         </div>
     );
 };

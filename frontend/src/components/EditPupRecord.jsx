@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function EditPupRecord({ record, setIsActive }) {
+export default function EditPupRecord({ record, updateRecords, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
@@ -16,18 +16,28 @@ export default function EditPupRecord({ record, setIsActive }) {
         event.preventDefault()
         try {
             await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record.id}`, recordFormData, {
-                ...recordFormData,
-                cost: parseFloat(recordFormData.cost) // Convert cost to float
-            }, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
             });
+            updateRecords(record.id);
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error adding record:', error);
         }
     };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setRecordFormData({
+            ...recordFormData,
+            [name]: value
+        });
+    };
+
+    const handleClick = () => {
+        setIsActive('pupDisplay');
+    }
 
     return (
         <>
@@ -41,7 +51,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="record_type"
                         placeholder="Record Type"
-                        value={record.record_type}
+                        value={recordFormData.record_type}
                         onChange={handleChange}
                         required
                     />
@@ -49,7 +59,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                     <input
                         type="date"
                         name="record_date"
-                        value={record.record_date}
+                        value={recordFormData.record_date}
                         onChange={handleChange}
                         required
                     />
@@ -58,7 +68,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="doctor_name"
                         placeholder="Doctor Name"
-                        value={record.doctor_name}
+                    value={recordFormData.doctor_name}
                         onChange={handleChange}
                         required
                     />
@@ -67,7 +77,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="vet_address"
                         placeholder="Vet Address"
-                        value={record.vet_address}
+                        value={recordFormData.vet_address}
                         onChange={handleChange}
                         required
                     />
@@ -76,7 +86,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="vet_phone_number"
                         placeholder="Vet Phone Number"
-                        value={record.vet_phone_number}
+                        value={recordFormData.vet_phone_number}
                         onChange={handleChange}
                         required
                     />
@@ -85,7 +95,7 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="cost"
                         placeholder="Cost"
-                        value={record.cost}
+                        value={recordFormData.cost}
                         onChange={handleChange}
                         required />
                     <label htmlFor="record_note">Note: </label>
@@ -93,10 +103,10 @@ export default function EditPupRecord({ record, setIsActive }) {
                         type="text"
                         name="record_note"
                         placeholder="Record Note"
-                        value={record.record_note}
+                        value={recordFormData.record_note}
                         onChange={handleChange}
                     />
-                    <button type="submit">Add Record</button>
+                    <button type="submit">Save Record</button>
                 </fieldset>
             </form>
         </>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import AddPupRecord from './AddPupRecord';
+import EditPupRecord from './EditPupRecord';
 import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
 import PupDropdown from './PupDropdown';
@@ -81,7 +82,7 @@ const PupRecords = () => {
     }
 
     let pupDropdown = (
-        <PupDropdown pups={pups} selectPup={selectedPup} handleChange={handlePupChange}/>
+        <PupDropdown pups={pups} selectPup={selectedPup} handleChange={handlePupChange} />
 
     );
 
@@ -93,13 +94,17 @@ const PupRecords = () => {
                         <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
                     </div>
                     <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} /> 
+                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
                 </>
             ) : (
-                <div>
-                    <AddPupRecord choosenPup={selectedPup} updateRecords={fetchRecords} setIsActive={setIsActive} />
-                </div>
-            )}
+                (isActive !== 'editRecord') ? (
+                    <div>
+                        <AddPupRecord choosenPup={selectedPup} updateRecords={fetchRecords} setIsActive={setIsActive} />
+                    </div>) : (
+                    <div>
+                        <EditPupRecord />
+                    </div>
+                ))}
         </div>
     );
 };
