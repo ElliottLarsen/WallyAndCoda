@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export default function EditPupRecord({ record, updateRecords, setIsActive }) {
+export default function PupRecordForm({ choosenPup, httpType, record_id, updateRecords, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
@@ -12,15 +13,74 @@ export default function EditPupRecord({ record, updateRecords, setIsActive }) {
         record_note: ''
     });
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+    useEffect(() => {
+        if (httpType === 'put') {
+            fetchPupRecordData(record_id);
+        }
+    }, [record_id]);
+
+    const fetchPupRecordData = async (record_id) => {
         try {
-            await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record.id}`, recordFormData, {
+            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}/`, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
             });
-            updateRecords(record.id);
+            const currRecord = response.data;
+            setRecordFormData({
+                record_type: currRecord.record_type,
+                record_date: currRecord.record_date.split('T')[0],
+                doctor_name: currRecord.doctor_name,
+                vet_address: currRecord.vet_address,
+                vet_phone_number: currRecord.vet_phone_number,
+                cost: currRecord.cost,
+                record_note: currRecord.record_note 
+            });
+        } catch (error) {
+            console.error('Error fetching record', error);
+        }
+    };
+
+    const handleAddSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post(`http://127.0.0.1:8000/wallyandcoda/pup/record/${choosenPup}`, {
+                ...recordFormData,
+                cost: parseFloat(recordFormData.cost) // Convert cost to float
+            }, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+            // Clear record form data
+            setRecordFormData({
+                record_type: '',
+                record_date: '',
+                doctor_name: '',
+                vet_address: '',
+                vet_phone_number: '',
+                cost: '',
+                record_note: ''
+            });
+            alert('Record added!')
+            updateRecords(choosenPup);
+            setIsActive('pupDisplay');
+        } catch (error) {
+            console.error('Error adding record:', error);
+        }
+    };
+
+    const handleEditSubmit = async (event) => {
+        event.preventDefault()
+        try {
+            await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}`, recordFormData, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+            alert('Record updated!')
+            fetchPupRecordData(record_id);
+            updateRecords(choosenPup);
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error adding record:', error);
@@ -42,9 +102,10 @@ export default function EditPupRecord({ record, updateRecords, setIsActive }) {
     return (
         <>
             <div className="mini-nav-button">
+                <h2>{(httpType === 'post') ? 'Add' : 'Edit'} Record</h2>
                 <button onClick={handleClick}>go back</button>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(httpType === 'post') ? handleAddSubmit : handleEditSubmit}>
                 <fieldset>
                     <label htmlFor="record_type">Record Type: </label>
                     <input
@@ -68,7 +129,7 @@ export default function EditPupRecord({ record, updateRecords, setIsActive }) {
                         type="text"
                         name="doctor_name"
                         placeholder="Doctor Name"
-                    value={recordFormData.doctor_name}
+                        value={recordFormData.doctor_name}
                         onChange={handleChange}
                         required
                     />
@@ -106,7 +167,7 @@ export default function EditPupRecord({ record, updateRecords, setIsActive }) {
                         value={recordFormData.record_note}
                         onChange={handleChange}
                     />
-                    <button type="submit">Save Record</button>
+                    <button type="submit">{(httpType === 'post') ? 'Add' : 'Save'}</button>
                 </fieldset>
             </form>
         </>

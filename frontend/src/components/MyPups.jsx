@@ -84,7 +84,7 @@ const MyPups = () => {
     // This can be extracted into its own component
     let myPups = (
         <>
-            <table>
+            <table className='my-pups'>
                 <tbody>
                     {pups.map(pup => (
                         <tr key={pup.id}>

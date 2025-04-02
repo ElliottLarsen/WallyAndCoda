@@ -14,7 +14,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
 
     useEffect(() => {
         if (httpType === 'put') {
-        fetchPupData(pup_id);
+            fetchPupData(pup_id);
         }
     }, [pup_id]);
 
@@ -43,7 +43,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({
-            ...formData, 
+            ...formData,
             [name]: value
         });
     };
@@ -79,13 +79,13 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
-        });
-        alert('Pup updated successfully!');
-        updatePups();
-        setIsActive('pupDisplay');
-    } catch (error) {
-        console.error("An error occured:", error);
-    }
+            });
+            alert('Pup updated successfully!');
+            updatePups();
+            setIsActive('pupDisplay');
+        } catch (error) {
+            console.error("An error occured:", error);
+        }
     };
 
     function handleClick() {
@@ -94,10 +94,12 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
 
     return (
         <>
-        <div className="mini-nav-button">
+           
+            <div className="mini-nav-button">
+            <h2>{(httpType === 'post') ? 'Add' : 'Edit'} Pup</h2>
                 <button onClick={handleClick}>go back</button>
             </div>
-            <form onSubmit={(httpType==='post') ? handleAddSubmit : handleEditSubmit}>
+            <form onSubmit={(httpType === 'post') ? handleAddSubmit : handleEditSubmit}>
                 <fieldset>
                     <label htmlFor="pup_name">Pup name </label>
                     <input
@@ -133,7 +135,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                         placeholder="AKC Registration Number"
                         value={formData.akc_registration_number}
                         onChange={handleChange}
-                        required 
+                        required
                     />
                     <label htmlFor="akc_registration_name">AKC Registration Name </label>
                     <input
@@ -143,7 +145,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                         value={formData.akc_registration_name}
                         onChange={handleChange}
                     />
-                    <button type="submit">{(httpType === 'post') ? 'Add' : 'Save'} Pup</button>
+                    <button type="submit">{(httpType === 'post') ? 'Add' : 'Save'}</button>
                 </fieldset>
             </form>
         </>

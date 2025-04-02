@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import AddPupRecord from './AddPupRecord';
-import EditPupRecord from './EditPupRecord';
+import PupRecordForm from './PupRecordForm';
 import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
 import PupDropdown from './PupDropdown';
@@ -13,11 +12,14 @@ const PupRecords = () => {
     const [pups, setPups] = useState([]);
     const [selectedPup, setSelectedPup] = useState('');
     const [records, setRecords] = useState([]);
+    const [recordId, setRecordId] = useState();
 
     const [isActive, setIsActive] = useState('pupDisplay');
 
     useEffect(() => {
-        fetchPups();
+        if (isActive === 'pupDisplay') {
+            fetchPups();
+        }
     }, []);
 
     const fetchPups = async () => {
@@ -94,15 +96,27 @@ const PupRecords = () => {
                         <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
                     </div>
                     <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} />
+                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} setIsActive={setIsActive} setRecordId={setRecordId} />
                 </>
             ) : (
                 (isActive !== 'editRecord') ? (
                     <div>
-                        <AddPupRecord choosenPup={selectedPup} updateRecords={fetchRecords} setIsActive={setIsActive} />
-                    </div>) : (
+                        <PupRecordForm
+                            choosenPup={selectedPup}
+                            httpType={'post'}
+                            updateRecords={fetchRecords}
+                            setIsActive={setIsActive}
+                        />
+                    </div>
+                ) : (
                     <div>
-                        <EditPupRecord />
+                        <PupRecordForm
+                            choosenPup={selectedPup}
+                            httpType={'put'}
+                            record_id={recordId}
+                            updateRecords={fetchRecords}
+                            setIsActive={setIsActive}
+                        />
                     </div>
                 ))}
         </div>
