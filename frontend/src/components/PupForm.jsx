@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
-    const [pupData, setPupData] = useState();
     const [formData, setFormData] = useState({
         pup_name: '',
         pup_sex: '',
@@ -25,7 +24,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                     Authorization: `Bearer ${getToken()}`
                 }
             });
-            setPupData(response.data);
             const currPup = response.data;
             setFormData({
                 pup_name: currPup.pup_name,
@@ -38,7 +36,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
             console.error('Error fetching pup:', error);
         }
     };
-
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -94,7 +91,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
 
     return (
         <>
-           
             <div className="mini-nav-button">
             <h2>{(httpType === 'post') ? 'Add' : 'Edit'} Pup</h2>
                 <button onClick={handleClick}>go back</button>

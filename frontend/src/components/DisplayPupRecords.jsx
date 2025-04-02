@@ -1,15 +1,9 @@
-import { useState } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-
-import EditPupRecord from './EditPupRecord';
 
 import FormatDate from '../util/FormatDate';
 
 export default function DisplayPupRecords({ records, handleDelete, setIsActive, setRecordId }) {
-    // const [isActive, setIsActive] = useState('pupDisplay');
-
     if (records.length === 0) {
         return <p>No records yet!</p>;
     }
@@ -21,7 +15,6 @@ export default function DisplayPupRecords({ records, handleDelete, setIsActive, 
 
     return (
         <>
-        
             <table>
                 <thead>
                     <tr>
@@ -39,7 +32,7 @@ export default function DisplayPupRecords({ records, handleDelete, setIsActive, 
                     {records.map(record => (
                         <tr key={record.id}>
                             <td>{record.record_type}</td>
-                            <td><FormatDate date={record.record_date}/></td>
+                            <td><FormatDate date={record.record_date} /></td>
                             <td>Dr. {record.doctor_name}</td>
                             <td>{record.vet_address}</td>
                             <td>{record.vet_phone_number}</td>

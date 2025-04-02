@@ -88,8 +88,8 @@ const MyPups = () => {
                 <tbody>
                     {pups.map(pup => (
                         <tr key={pup.id}>
-                            <th style={{ cursor: "pointer" }} onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
-                            <td style={{ cursor: "pointer" }}>
+                            <th onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
+                            <td>
                                 <FontAwesomeIcon
                                     icon={faEdit}
                                     onClick={() => handleEditClick(pup, 'editPup')}

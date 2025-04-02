@@ -130,6 +130,8 @@ hr { width:15rem;}
     cursor: pointer;
 }
 
+.my-pups td {cursor: pointer;}
+
 .pup-modal {
     border: 2px solid var(--brown);
     width: 25rem;
