@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import '../styles/mypups.css'
 
-import AddPup from './AddPup';
+import PupForm from './PupForm';
+import DisplayPup from './DisplayPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
 
@@ -56,6 +57,12 @@ const MyPups = () => {
         }
     };
 
+    const handleEditClick = (pup, value) => {
+        setIsActive(value);
+        setSelectedPup(pup);
+        fetchPups();
+    }
+
     function handleClick(value) {
         setIsActive(value);
     }
@@ -70,15 +77,23 @@ const MyPups = () => {
         setSelectedPup(null);
     }
 
+    let displayPup = (
+        <DisplayPup currentPup={selectedPup} />
+    );
+
     // This can be extracted into its own component
     let myPups = (
         <>
-            <table>
+            <table className='my-pups'>
                 <tbody>
                     {pups.map(pup => (
                         <tr key={pup.id}>
-                            <th style={{cursor:"pointer"}} onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
-                            <td style={{cursor:"pointer"}}>
+                            <th onClick={() => openPupModal(pup)}>{pup.pup_name}</th>
+                            <td>
+                                <FontAwesomeIcon
+                                    icon={faEdit}
+                                    onClick={() => handleEditClick(pup, 'editPup')}
+                                />
                                 <FontAwesomeIcon
                                     className='trash'
                                     icon={faTrash}
@@ -89,9 +104,9 @@ const MyPups = () => {
                     ))}
                 </tbody>
             </table>
-            
+
             {activeModal && selectedPup && (
-                <PupModal currentPup={selectedPup} close={closePupModal} />
+                <PupModal content={displayPup} close={closePupModal} />
             )}
         </>
     );
@@ -106,11 +121,24 @@ const MyPups = () => {
                     </div>
                     <ContentCard className={"my-pups"} content={myPups} />
                 </div>
+            ) : ((isActive !== 'editPup') ? (
+                <div>
+                    <PupForm
+                        httpType={'post'}
+                        updatePups={fetchPups}
+                        setIsActive={setIsActive}
+                    />
+                </div>
             ) : (
                 <div>
-                    <AddPup updatePups={fetchPups} setIsActive={setIsActive} />
+                    <PupForm
+                        httpType={'put'}
+                        updatePups={fetchPups}
+                        pup_id={selectedPup.id}
+                        setIsActive={setIsActive}
+                    />
                 </div>
-            )}
+            ))}
         </div>
     );
 };

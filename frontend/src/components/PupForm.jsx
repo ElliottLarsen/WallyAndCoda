@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function AddPup({ updatePups, setIsActive }) {
+export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [formData, setFormData] = useState({
         pup_name: '',
@@ -11,15 +11,41 @@ export default function AddPup({ updatePups, setIsActive }) {
         akc_registration_name: ''
     });
 
+    useEffect(() => {
+        if (httpType === 'put') {
+            fetchPupData(pup_id);
+        }
+    }, [pup_id]);
+
+    const fetchPupData = async (pup_id) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+            const currPup = response.data;
+            setFormData({
+                pup_name: currPup.pup_name,
+                pup_sex: currPup.pup_sex,
+                microchip_number: currPup.microchip_number,
+                akc_registration_number: currPup.akc_registration_number,
+                akc_registration_name: currPup.akc_registration_name
+            });
+        } catch (error) {
+            console.error('Error fetching pup:', error);
+        }
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value
         });
-    }
+    };
 
-    const handleSubmit = async (e) => {
+    const handleAddSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://127.0.0.1:8000/wallyandcoda/pup/', formData, {
@@ -43,6 +69,22 @@ export default function AddPup({ updatePups, setIsActive }) {
         }
     };
 
+    const handleEditSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+            alert('Pup updated successfully!');
+            updatePups();
+            setIsActive('pupDisplay');
+        } catch (error) {
+            console.error("An error occured:", error);
+        }
+    };
+
     function handleClick() {
         setIsActive('pupDisplay');
     }
@@ -50,9 +92,10 @@ export default function AddPup({ updatePups, setIsActive }) {
     return (
         <>
             <div className="mini-nav-button">
+            <h2>{(httpType === 'post') ? 'Add' : 'Edit'} Pup</h2>
                 <button onClick={handleClick}>go back</button>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(httpType === 'post') ? handleAddSubmit : handleEditSubmit}>
                 <fieldset>
                     <label htmlFor="pup_name">Pup name </label>
                     <input
@@ -88,7 +131,7 @@ export default function AddPup({ updatePups, setIsActive }) {
                         placeholder="AKC Registration Number"
                         value={formData.akc_registration_number}
                         onChange={handleChange}
-                        required 
+                        required
                     />
                     <label htmlFor="akc_registration_name">AKC Registration Name </label>
                     <input
@@ -98,7 +141,7 @@ export default function AddPup({ updatePups, setIsActive }) {
                         value={formData.akc_registration_name}
                         onChange={handleChange}
                     />
-                    <button type="submit">Add Pup</button>
+                    <button type="submit">{(httpType === 'post') ? 'Add' : 'Save'}</button>
                 </fieldset>
             </form>
         </>

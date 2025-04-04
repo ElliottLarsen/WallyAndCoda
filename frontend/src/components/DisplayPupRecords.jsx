@@ -1,14 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-export default function DisplayPupRecords({ records, handleDelete }) {
-    
+import FormatDate from '../util/FormatDate';
+
+export default function DisplayPupRecords({ records, handleDelete, setIsActive, setRecordId }) {
     if (records.length === 0) {
         return <p>No records yet!</p>;
     }
-    
+
+    const handleEditClick = (record_id) => {
+        setIsActive('editRecord');
+        setRecordId(record_id)
+    }
+
     return (
-        <div>
+        <>
             <table>
                 <thead>
                     <tr>
@@ -26,17 +32,20 @@ export default function DisplayPupRecords({ records, handleDelete }) {
                     {records.map(record => (
                         <tr key={record.id}>
                             <td>{record.record_type}</td>
-                            <td>{record.record_date.split('T')[0]}</td>
+                            <td><FormatDate date={record.record_date} /></td>
                             <td>Dr. {record.doctor_name}</td>
                             <td>{record.vet_address}</td>
                             <td>{record.vet_phone_number}</td>
                             <td>${record.cost}</td>
                             <td>{record.record_note}</td>
-                            <td><FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDelete(record.id)} /></td>
+                            <td>
+                                <FontAwesomeIcon icon={faEdit} onClick={() => handleEditClick(record.id)} />
+                                <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDelete(record.id)} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-        </div>
+        </>
     );
 }
