@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
-import '../styles/mypups.css'
 
 import PupForm from './PupForm';
 import DisplayPup from './DisplayPup';

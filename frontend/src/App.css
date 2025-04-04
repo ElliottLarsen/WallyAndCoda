@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+    --brown:        rgba(202, 119, 110);
+    --brownT:       rgba(202,119,110, 0.3);
+    --plum:         rgba(143, 97, 132);
+    --bluegray:     rgba(69, 83, 111);
+    --lightblue:    rgba(0, 176, 255);
+    --lightblueT:   rgba(0, 176, 255,0.3);
+    --cream:        rgba(249,249,247);
+    --gray:         rgba(129, 133, 137);
+    --grayT:        rgba(129, 133, 137, 0.3);
+    --black:        rgba(35,43,43);
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+header {
+    display: flex;
+    color: var(--cream);
+    background-color: var(--brown);
+    padding: 2%;
+}
+
+main {
+    /* padding:0 25px; */
+    height: 80vh;
+}
+
+footer {
+    text-align: center;
+    color:var(--brown);
+    padding:2%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mini-nav-button {
+    margin:0.75rem;
+}
+.pup-dropdown {
+    padding-bottom: 3%;
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.square {
+    height: 55vh;
+    width: 55vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.square h1 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--cream);
+    text-align: center;
+}
+
+hr { width:15rem;}
+
+.brown {
+    background-color: var(--brown);
+}
+
+.white {
+    text-align: center;
+}
+
+.App-nav {
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    text-transform: lowercase;
+}
+
+.App-nav a {
+    height: 1.25rem;
+    margin: 0 15px;
+    text-decoration: none;
+    color:var(--black);
+}
+
+.App-nav a:hover {
+    color:var(--black);
+    border: 3px solid var(--plum);
+    border-radius: 10px;
+    padding: 5px 15px;  
+}
+
+.App-nav a:active { 
+    color:var(--black);
+    border-bottom: var(--plum);
+}
+
+.App-nav a:visited {color:var(--black);}
+
+.pup-record {
+    font-size: 1rem;
+}
+
+.my-pups th {
+    width: 8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 1.25rem;
+    color: var(--black);
+    text-align: left;
+    cursor: pointer;
+    
+}
+
+.my-pups td {
+    margin-left:1%;
+    cursor: pointer;}
+
+.pup-modal {
+    border: 2px solid var(--brown);
+    width: 25rem;
+}
+
+.pup-modal h2 {
+    margin: 0 0 0.25rem 0;
+    font-size:2rem;
+    text-align: center;
+}
+
+.pup-modal table {
+    display: flex;
+    justify-content: center;
+}
+
+.pup-modal th {
+    display: block;
+    font-weight: 700;
+    font-size: 90%;
+    color: var(--bluegray);
+    text-transform: uppercase;
+    text-align:left;
+}
+
+.pup-modal td {
+    text-align: right ;
+}
+
+.pup-modal::backdrop { background: rgba(129, 133, 137,0.9)}
+
+.pup-modal button.exit-button {
+    border: 2px solid var(--black);
+    background-color: var(--black);
+    color: white;
+}
+table { 
+    width: 75%;
+    margin-left: 3%
+}
+
+thead th {
+    text-align: center;
+}
+
+tbody td {
+    text-align: center;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+    font-size: 90%;
+    color: var(--bluegray);
+    text-transform: uppercase;
+    margin-right: 2%;
+}
+
+form{
+    width: 90%;
+    max-width: 40rem;
+    font-family: "Nunito Sans", sans-serif;
+    margin: 1rem auto;
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    font-size: 90%;
+    color: var(--bluegray);
+    text-transform: uppercase;
+}
+
+label.required:after{
+    content:"*"; 
+    color:var(--lightblue);
+}
+
+fieldset{
+    border: none;
+}
+
+input {
+    font-family: "Nunito Sans", sans-serif ;
+    font-size: 110%;
+    padding:1%;
+    margin:1%;
+    width: 14rem;
+    height: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--black);
+    color: var(--gray);
+}
+
+input:focus{
+    background-color: var(--brownT);
+    border: 2px solid var(--brown);
+    border-color: var(--black);
+    color:var(--black);
+}
+
+select { 
+    border-radius: 5px;
+    min-width: 215px; 
+    font-size: 110%;}
+
+button {
+    float: right;
+    background-color: var(--plum);
+    border: 3px solid var(--plum);
+    border-radius: 10px;
+    color: var(--cream);
+    font-size: 1rem;
+    line-height: 2;
+    padding: 0 2rem;
+    margin: 1rem;
+    width:fit-content;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: var(--cream);
+    color: var(--plum);
+    border: 2px solid var(--plum);
+}
