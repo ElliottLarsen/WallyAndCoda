@@ -89,7 +89,7 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
 
 ### User Registration and Authentication
 <p>
-<image src='gifs/register-loginout.gif' width=900><br>
+<image src='gifs/register.gif' width=900><br>
 </p>
 
 - Users can create an account.
@@ -98,7 +98,7 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
 
 ### User Account Update
 <p>
-<image src='gifs/user-update.gif' width=900><br>
+<image src='gifs/edit_user.gif' width=900><br>
 </p>
 
 - Users can update their account information.
@@ -106,7 +106,7 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
 
 ### Pup Profile Create and Remove
 <p>
-<image src='gifs/pup-crud.gif' width=900><br>
+<image src='gifs/pups.gif' width=900><br>
 </p>
 
 - Users can create their pup profiles.
@@ -115,15 +115,9 @@ Wally and Coda is a full-stack web application built with [FastAPI](https://fast
 
 ### Vet Visit Record Create and Remove
 <p>
-<image src='gifs/record-crud.gif' width=900><br>
+<image src='gifs/records.gif' width=900><br>
 </p>
 
 - Users can create vet visit records for each pup.
 - If a pup is removed, its records are removed as well.
 - Users can remove individual records.
-
-## Contact
-Elliott Larsen
-- Email: elliottlrsn@gmail.com
-- GitHub: [@elliottlarsen](https://github.com/elliottlarsen)
-- LinkedIn: [@elliottlarsen](https://www.linkedin.com/in/elliottlarsen)
