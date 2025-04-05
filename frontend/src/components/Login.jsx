@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css';
 
 export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a prop
     const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -44,7 +43,7 @@ export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a 
                 <div className='square white'>
                     <form onSubmit={handleLogin}>
                         <fieldset>
-                            <label htmlFor="username">Username: </label>
+                            <label htmlFor="username">Username </label>
                             <input
                                 id="username"
                                 type="text"
@@ -54,7 +53,7 @@ export default function Login({ setIsLoggedIn }) { // Accept setIsLoggedIn as a 
                                 onChange={handleChange}
                                 required
                             />
-                            <label htmlFor="password">Password: </label>
+                            <label htmlFor="password">Password </label>
                             <input
                                 id="password"
                                 type="password"

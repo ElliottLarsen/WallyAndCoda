@@ -1,4 +1,4 @@
-import '../styles/welcome.css';
+// import '../styles/welcome.css';
 import whippet from '../assets/whippet2.jpg'
 
 export default function Welcome() {

@@ -39,8 +39,18 @@ export default function DisplayPupRecords({ records, handleDelete, setIsActive, 
                             <td>${record.cost}</td>
                             <td>{record.record_note}</td>
                             <td>
-                                <FontAwesomeIcon icon={faEdit} onClick={() => handleEditClick(record.id)} />
-                                <FontAwesomeIcon className='trash' icon={faTrash} onClick={() => handleDelete(record.id)} />
+                                <FontAwesomeIcon
+                                    style={{ cursor: 'pointer' }}
+                                    icon={faEdit}
+                                    onClick={() => handleEditClick(record.id)}
+                                />
+                                
+                                <FontAwesomeIcon
+                                    style={{ cursor: 'pointer' }}
+                                    className='trash'
+                                    icon={faTrash}
+                                    onClick={() => handleDelete(record.id)}
+                                />
                             </td>
                         </tr>
                     ))}

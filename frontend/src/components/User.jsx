@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/welcome.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
+import UserDisplay from './UserDisplay';
+import UserForm from './UserForm';
 
 
 const User = () => {
@@ -15,6 +19,8 @@ const User = () => {
         password1: '',
         password2: ''
     });
+
+    const [isActive, setIsActive] = useState('userDisplay');
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -61,15 +67,16 @@ const User = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            // If update is successful, show a prompt
             alert('User account updated successfully');
-            // Optionally, you can redirect the user or perform any other action here
+            setIsActive('userDisplay');
         } catch (error) {
             console.error('Error updating user data:', error);
-            // Handle error updating user data
         }
     };
 
+    function handleEditClick() {
+        setIsActive('editUser');
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -87,26 +94,28 @@ const User = () => {
         <div className='flex-container'>
             <div className='square brown'>
                 <hr />
-                <h1>User Information</h1>
+                <h1>{userData.username}'s Account</h1>
                 <hr />
             </div>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} />
-                    <label htmlFor="email">Email: </label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} />
-                    <label htmlFor="first_name">First Name: </label>
-                    <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} />
-                    <label htmlFor="last_name">Last Name: </label>
-                    <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} />
-                    <label htmlFor="password1">New Password: </label>
-                    <input type="password" name="password1" value={formData.password1} onChange={handleChange} />
-                    <label htmlFor="passwprd2">Confirm New Password: </label>
-                    <input type="password" name="password2" value={formData.password2} onChange={handleChange} />
-                    <button type="submit">Update</button>
-                </form>
-            </div>
+            {(isActive === 'userDisplay') ? (
+                <div>
+                    <UserDisplay currentUser={formData} />
+                    <div>
+                        <FontAwesomeIcon
+                            icon={faEdit}
+                            style={{ cursor: 'pointer', float: 'right' }}
+                            onClick={handleEditClick}
+                        />
+                    </div>
+                </div>
+            ) : (
+                <UserForm
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    setIsActive={setIsActive}
+                />
+            )}
         </div>
     );
 };
