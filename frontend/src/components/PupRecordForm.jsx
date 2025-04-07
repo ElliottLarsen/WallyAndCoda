@@ -69,7 +69,7 @@ export default function PupRecordForm({ choosenPup, httpType, record_id, updateR
             cost: currRecord.cost,
             record_note: currRecord.record_note
         }
-    }
+    };
 
     const handleSubmit = async (recordFormData) => {
         try {
