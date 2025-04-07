@@ -93,10 +93,20 @@ const PupRecords = () => {
             {(isActive === 'pupDisplay') ? (
                 <>
                     <div>
-                        <button className='add-button' onClick={() => handleClick('addRecord')}>+ new record</button>
+                        <button
+                            className='add-button'
+                            onClick={() => handleClick('addRecord')}
+                        >
+                            + new record
+                        </button>
                     </div>
                     <ContentCard className={'pup-dropdown'} content={pupDropdown} />
-                    <DisplayPupRecords records={records} handleDelete={handleDeleteRecord} setIsActive={setIsActive} setRecordId={setRecordId} />
+                    <DisplayPupRecords
+                        records={records}
+                        handleDelete={handleDeleteRecord}
+                        setIsActive={setIsActive}
+                        setRecordId={setRecordId}
+                    />
                 </>
             ) : (
                 (isActive !== 'editRecord') ? (

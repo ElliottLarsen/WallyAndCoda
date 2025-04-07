@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import InputForm from "./InputForm";
+
+const PUP_FORM = [
+    { name: "pup_name", label: "Pup Name", type: "text", placeholder: "Pup Name", required: true },
+    { name: "pup_sex", label: "Pup Sex", type: "text", placeholder: "Pup Sex", required: true },
+    { name: "microchip_number", label: "Microchip Number", type: "text", placeholder: "Microchip Number", required: true },
+    { name: "akc_registration_number", label: "AKC Registration Number", type: "text", placeholder: "AKC Registration Number", required: true },
+    { name: "akc_registration_name", label: "AKC Registration Name", type: "text", placeholder: "AKC Registration Name", required: false },
+];
+
 export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
     const getToken = () => localStorage.getItem('token');
     const [formData, setFormData] = useState({
@@ -37,6 +47,22 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
         }
     };
 
+    const fetchData = async () => {
+        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        });
+        const currPup = response.data;
+        return {
+            pup_name: currPup.pup_name,
+            pup_sex: currPup.pup_sex,
+            microchip_number: currPup.microchip_number,
+            akc_registration_number: currPup.akc_registration_number,
+            akc_registration_name: currPup.akc_registration_name
+        }
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({
@@ -45,105 +71,49 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
         });
     };
 
-    const handleAddSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (formData) => {
         try {
-            await axios.post('http://127.0.0.1:8000/wallyandcoda/pup/', formData, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
-            });
-            // Clear form data
-            setFormData({
-                pup_name: '',
-                pup_sex: '',
-                microchip_number: '',
-                akc_registration_number: '',
-                akc_registration_name: ''
-            });
-            alert('Pup added!')
+            if (httpType === 'post') {
+                await axios.post('http://127.0.0.1:8000/wallyandcoda/pup/', formData, {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                });
+                // Clear form data
+                setFormData({
+                    pup_name: '',
+                    pup_sex: '',
+                    microchip_number: '',
+                    akc_registration_number: '',
+                    akc_registration_name: ''
+                });
+                alert('Pup added!')
+            } else {
+                await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                });
+                alert('Pup updated successfully!');
+            }
             updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
-            console.error('Error adding pup:', error);
+            console.error('Error submitting form:', error);
         }
     };
-
-    const handleEditSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
-            });
-            alert('Pup updated successfully!');
-            updatePups();
-            setIsActive('pupDisplay');
-        } catch (error) {
-            console.error("An error occured:", error);
-        }
-    };
-
-    function handleClick() {
-        setIsActive('pupDisplay');
-    }
 
     return (
         <>
-            <div className="mini-nav-button">
-            <h2>{(httpType === 'post') ? 'Add' : 'Edit'} Pup</h2>
-                <button onClick={handleClick}>go back</button>
-            </div>
-            <form onSubmit={(httpType === 'post') ? handleAddSubmit : handleEditSubmit}>
-                <fieldset>
-                    <label htmlFor="pup_name">Pup name </label>
-                    <input
-                        type="text"
-                        name="pup_name"
-                        placeholder="Pup Name"
-                        value={formData.pup_name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="pup_sex">Pup sex </label>
-                    <input
-                        type="text"
-                        name="pup_sex"
-                        placeholder="Pup sex"
-                        value={formData.pup_sex}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="microchip_number">Microchip Number </label>
-                    <input
-                        type="text"
-                        name="microchip_number"
-                        placeholder="Microchip Number"
-                        value={formData.microchip_number}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="akc_registration_number">AKC Registration Number </label>
-                    <input
-                        type="text"
-                        name="akc_registration_number"
-                        placeholder="AKC Registration Number"
-                        value={formData.akc_registration_number}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="akc_registration_name">AKC Registration Name </label>
-                    <input
-                        type="text"
-                        name="akc_registration_name"
-                        placeholder="AKC Registration Name"
-                        value={formData.akc_registration_name}
-                        onChange={handleChange}
-                    />
-                    <button type="submit">{(httpType === 'post') ? 'Add' : 'Save'}</button>
-                </fieldset>
-            </form>
+            <InputForm
+                initialData={formData}
+                httpType={httpType}
+                fetchData={(httpType === 'put') ? fetchData : null}
+                onSubmit={handleSubmit}
+                onCancel={() => setIsActive('pupDisplay')}
+                formFields={PUP_FORM}
+                title={(httpType === 'post') ? 'Add Pup' : 'Edit Pup'}
+            />
         </>
     );
 }
