@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import PupForm from './PupForm';
 import DisplayPup from './DisplayPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
+import AlertModal from './AlertModal';
 
 const MyPups = () => {
     const navigateTo = useNavigate();
     const [pups, setPups] = useState([]);
     const [selectedPup, setSelectedPup] = useState('');
+    const [isActiveAlert, setIsActiveAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState();
 
     const [isActive, setIsActive] = useState('pupDisplay')
     const [activeModal, setActiveModal] = useState(false);
@@ -76,6 +79,10 @@ const MyPups = () => {
         setSelectedPup(null);
     }
 
+    const closeAlertModal = () => {
+        setIsActiveAlert(false);
+    }
+
     let displayPup = (
         <DisplayPup currentPup={selectedPup} />
     );
@@ -105,7 +112,7 @@ const MyPups = () => {
             </table>
 
             {activeModal && selectedPup && (
-                <PupModal content={displayPup} close={closePupModal} />
+                <PupModal close={closePupModal} content={displayPup} />
             )}
         </>
     );
@@ -126,6 +133,8 @@ const MyPups = () => {
                         httpType={'post'}
                         updatePups={fetchPups}
                         setIsActive={setIsActive}
+                        setIsActiveAlert={setIsActiveAlert}
+                        setAlertMessage={setAlertMessage}
                     />
                 </div>
             ) : (
@@ -135,10 +144,15 @@ const MyPups = () => {
                         updatePups={fetchPups}
                         pup_id={selectedPup.id}
                         setIsActive={setIsActive}
+                        setIsActiveAlert={setIsActiveAlert}
+                        setAlertMessage={setAlertMessage}
                     />
                 </div>
             ))}
+             {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage}/>}
         </div>
+       
+        
     );
 };
 

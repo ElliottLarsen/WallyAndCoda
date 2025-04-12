@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import AlertModal from "./AlertModal";
 import InputForm from "./InputForm";
 
 const PUP_FORM = [
@@ -11,7 +12,7 @@ const PUP_FORM = [
     { name: "akc_registration_name", label: "AKC Registration Name", type: "text", placeholder: "AKC Registration Name", required: false },
 ];
 
-export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
+export default function PupForm({ httpType, updatePups, pup_id, setIsActive, setIsActiveAlert, setAlertMessage }) {
     const getToken = () => localStorage.getItem('token');
     const [formData, setFormData] = useState({
         pup_name: '',
@@ -87,19 +88,27 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                     akc_registration_number: '',
                     akc_registration_name: ''
                 });
-                alert('Pup added!')
+                setAlertMessage(`${formData.pup_name} added!`);
+                setIsActiveAlert(true);
+                // alert('Pup added!')
             } else {
                 await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
                 });
-                alert('Pup updated successfully!');
+                
+                setAlertMessage(`${formData.pup_name} updated succesfully!`);
+                setIsActiveAlert(true);
+                
+                // alert('Pup updated successfully!');
             }
             updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error submitting form:', error);
+            setAlertMessage('Error submitting form!');
+            setIsActiveAlert(true);
         }
     };
 
