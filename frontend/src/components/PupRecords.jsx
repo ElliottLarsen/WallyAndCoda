@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import AlertModal from './AlertModal';
 import PupRecordForm from './PupRecordForm';
 import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
@@ -13,6 +14,8 @@ const PupRecords = () => {
     const [selectedPup, setSelectedPup] = useState('');
     const [records, setRecords] = useState([]);
     const [recordId, setRecordId] = useState();
+    const [isActiveAlert, setIsActiveAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState();
 
     const [isActive, setIsActive] = useState('pupDisplay');
 
@@ -83,6 +86,10 @@ const PupRecords = () => {
         setIsActive(value);
     }
 
+    const closeAlertModal = () => {
+        setIsActiveAlert(false);
+    }
+
     let pupDropdown = (
         <PupDropdown pups={pups} selectPup={selectedPup} handleChange={handlePupChange} />
 
@@ -116,6 +123,8 @@ const PupRecords = () => {
                             httpType={'post'}
                             updateRecords={fetchRecords}
                             setIsActive={setIsActive}
+                            setIsActiveAlert={setIsActiveAlert}
+                            setAlertMessage={setAlertMessage}
                         />
                     </div>
                 ) : (
@@ -126,9 +135,12 @@ const PupRecords = () => {
                             record_id={recordId}
                             updateRecords={fetchRecords}
                             setIsActive={setIsActive}
+                            setIsActiveAlert={setIsActiveAlert}
+                            setAlertMessage={setAlertMessage}
                         />
                     </div>
                 ))}
+            {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage} />}
         </div>
     );
 };

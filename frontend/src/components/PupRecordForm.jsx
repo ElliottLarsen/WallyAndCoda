@@ -13,7 +13,16 @@ const PUP_RECORD_FORM = [
     { name: "record_note", label: "Note", type: "text", placeholder: "Record Note", required: false },
 ];
 
-export default function PupRecordForm({ choosenPup, httpType, record_id, updateRecords, setIsActive }) {
+export default function PupRecordForm(
+    {
+        choosenPup,
+        httpType,
+        record_id,
+        updateRecords,
+        setIsActive,
+        setIsActiveAlert,
+        setAlertMessage
+    }) {
     const getToken = () => localStorage.getItem('token');
     const [recordFormData, setRecordFormData] = useState({
         record_type: '',
@@ -52,7 +61,7 @@ export default function PupRecordForm({ choosenPup, httpType, record_id, updateR
             console.error('Error fetching record', error);
         }
     };
-
+    // this is to return inside of InputForm
     const fetchData = async () => {
         const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}/`, {
             headers: {
@@ -92,7 +101,9 @@ export default function PupRecordForm({ choosenPup, httpType, record_id, updateR
                     cost: '',
                     record_note: ''
                 });
-                alert("Record added!");
+                setAlertMessage('Record added!')
+                setIsActiveAlert(true);
+               
             } else {
                 await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}`,
                     recordFormData,
@@ -103,12 +114,15 @@ export default function PupRecordForm({ choosenPup, httpType, record_id, updateR
                     }
                 );
                 fetchPupRecordData();
-                alert('Record saved!');
+                setAlertMessage('Record saved!')
+                setIsActiveAlert(true);
             }
             updateRecords(choosenPup);
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error submitting record:', error);
+            setAlertMessage('Error submitting record')
+            setIsActiveAlert(true);
         }
     };
 
