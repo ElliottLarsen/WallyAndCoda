@@ -9,17 +9,6 @@ export default function InputForm({
     title
 }) {
     const [formData, setFormData] = useState(initialData);
-    
-    // useEffect(() => {
-    //     const fetchAndSetData = async () => {
-    //         const data = fetchData;
-    //         setFormData(data);
-    //     };
-    //     if (httpType === 'put' && fetchData) {
-    //         fetchAndSetData();
-    //     }
-
-    // }, [httpType, fetchData]);
 
     useEffect(() => {
         setFormData(initialData);

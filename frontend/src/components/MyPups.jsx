@@ -119,7 +119,10 @@ const MyPups = () => {
                                         close={closePupModal}
                                         content={(
                                             <DeleteConfirmation
-                                                onConfirm={() => handleDeletePup(pup.id)}
+                                                onConfirm={() => {
+                                                    handleDeletePup(pup.id);
+                                                    closeDeleteModal();
+                                                }}
                                                 onCancel={closeDeleteModal}
                                             />)}
                                         modalStyle={'pup-modal'}

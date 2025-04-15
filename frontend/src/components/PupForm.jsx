@@ -47,34 +47,10 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
         }
     };
 
-    const fetchData = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        const currPup = response.data;
-        return {
-            pup_name: currPup.pup_name,
-            pup_sex: currPup.pup_sex,
-            microchip_number: currPup.microchip_number,
-            akc_registration_number: currPup.akc_registration_number,
-            akc_registration_name: currPup.akc_registration_name
-        }
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
     const handleSubmit = async (formData) => {
         try {
             if (httpType === 'post') {
-                await axios.post('http://127.0.0.1:8000/wallyandcoda/pup', formData, {
+                await axios.post('http://127.0.0.1:8000/wallyandcoda/pup/', formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
@@ -98,7 +74,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
                 setAlertMessage(`${formData.pup_name} updated succesfully!`);
                 setIsActiveAlert(true);
             }
-            // updatePups();
+            updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -112,7 +88,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
             <InputForm
                 initialData={formData}
                 httpType={httpType}
-                fetchData={(httpType === 'put') ? fetchData : null}
                 onSubmit={handleSubmit}
                 onCancel={() => setIsActive('pupDisplay')}
                 formFields={PUP_FORM}
