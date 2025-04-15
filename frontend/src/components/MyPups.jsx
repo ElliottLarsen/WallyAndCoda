@@ -64,7 +64,6 @@ const MyPups = () => {
     const handleEditClick = (pup, value) => {
         setIsActive(value);
         setSelectedPup(pup);
-        // fetchPups();
     }
 
     function handleClick(value) {
@@ -142,7 +141,6 @@ const MyPups = () => {
             )}
         </>
     );
-
 
     return (
         <div className='container'>

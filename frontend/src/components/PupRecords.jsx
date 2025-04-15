@@ -140,7 +140,7 @@ const PupRecords = () => {
                         />
                     </div>
                 ))}
-            {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage} />}
+            {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage} modalStyle={'pup-modal'} />}
         </div>
     );
 };

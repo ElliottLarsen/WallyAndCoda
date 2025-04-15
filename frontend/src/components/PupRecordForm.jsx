@@ -35,14 +35,15 @@ export default function PupRecordForm(
     });
 
     useEffect(() => {
+        // fetchPupRecordData();
         if (httpType === 'put') {
             fetchPupRecordData();
         }
-    }, [record_id]);
+    }, [httpType, record_id]);
 
     const fetchPupRecordData = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}/`, {
+            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}`, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
@@ -63,7 +64,7 @@ export default function PupRecordForm(
     };
     // this is to return inside of InputForm
     const fetchData = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}/`, {
+        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/record/${record_id}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -113,7 +114,7 @@ export default function PupRecordForm(
                         }
                     }
                 );
-                fetchPupRecordData();
+                // fetchPupRecordData();
                 setAlertMessage('Record saved!')
                 setIsActiveAlert(true);
             }
@@ -131,7 +132,6 @@ export default function PupRecordForm(
             <InputForm
                 initialData={recordFormData}
                 httpType={httpType}
-                fetchData={(httpType === 'put') ? fetchData : null}
                 onSubmit={handleSubmit}
                 onCancel={() => setIsActive('pupDisplay')}
                 formFields={PUP_RECORD_FORM}

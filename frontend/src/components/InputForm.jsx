@@ -3,25 +3,27 @@ import { useState, useEffect } from "react";
 export default function InputForm({
     initialData,
     httpType,
-    fetchData,
     onSubmit,
     onCancel,
     formFields,
     title
 }) {
     const [formData, setFormData] = useState(initialData);
+    
+    // useEffect(() => {
+    //     const fetchAndSetData = async () => {
+    //         const data = fetchData;
+    //         setFormData(data);
+    //     };
+    //     if (httpType === 'put' && fetchData) {
+    //         fetchAndSetData();
+    //     }
+
+    // }, [httpType, fetchData]);
 
     useEffect(() => {
-        const fetchAndSetData = async () => {
-            const data = await fetchData();
-            setFormData(data);
-        };
-        if (httpType === 'put' && fetchData) {
-            fetchAndSetData();
-        }
-
-    }, [httpType, fetchData]);
-
+        setFormData(initialData);
+    }, [initialData])
 
     const handleChange = (event) => {
         const { name, value } = event.target;

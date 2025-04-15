@@ -29,7 +29,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
 
     const fetchPupData = async (pup_id) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
+            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
@@ -48,7 +48,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
     };
 
     const fetchData = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
+        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
             }
@@ -74,7 +74,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
     const handleSubmit = async (formData) => {
         try {
             if (httpType === 'post') {
-                await axios.post('http://127.0.0.1:8000/wallyandcoda/pup/', formData, {
+                await axios.post('http://127.0.0.1:8000/wallyandcoda/pup', formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
@@ -90,7 +90,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
                 setAlertMessage(`${formData.pup_name} added!`);
                 setIsActiveAlert(true);
             } else {
-                await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
+                await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
@@ -98,7 +98,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
                 setAlertMessage(`${formData.pup_name} updated succesfully!`);
                 setIsActiveAlert(true);
             }
-            updatePups();
+            // updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error submitting form:', error);
