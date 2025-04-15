@@ -9,6 +9,7 @@ import DisplayPup from './DisplayPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
 import AlertModal from './AlertModal';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const MyPups = () => {
     const navigateTo = useNavigate();
@@ -18,6 +19,7 @@ const MyPups = () => {
     const [alertMessage, setAlertMessage] = useState();
 
     const [isActive, setIsActive] = useState('pupDisplay')
+    const [activeDelete, setIsActiveDelete] = useState(false);
     const [activeModal, setActiveModal] = useState(false);
 
     useEffect(() => {
@@ -62,7 +64,7 @@ const MyPups = () => {
     const handleEditClick = (pup, value) => {
         setIsActive(value);
         setSelectedPup(pup);
-        fetchPups();
+        // fetchPups();
     }
 
     function handleClick(value) {
@@ -81,6 +83,14 @@ const MyPups = () => {
 
     const closeAlertModal = () => {
         setIsActiveAlert(false);
+    }
+
+    const openDeleteModal = () => {
+        setIsActiveDelete(true);
+    }
+
+    const closeDeleteModal = () => {
+        setIsActiveDelete(false);
     }
 
     let displayPup = (
@@ -103,8 +113,20 @@ const MyPups = () => {
                                 <FontAwesomeIcon
                                     className='trash'
                                     icon={faTrash}
-                                    onClick={() => handleDeletePup(pup.id)}
+                                    onClick={openDeleteModal}
                                 />
+                                {activeDelete && (
+                                    <AlertModal
+                                        close={closePupModal}
+                                        content={(
+                                            <DeleteConfirmation
+                                                onConfirm={() => handleDeletePup(pup.id)}
+                                                onCancel={closeDeleteModal}
+                                            />)}
+                                        modalStyle={'pup-modal'}
+                                        isDelete={true}
+                                    />
+                                )}
                             </td>
                         </tr>
                     ))}
@@ -112,7 +134,11 @@ const MyPups = () => {
             </table>
 
             {activeModal && selectedPup && (
-                <PupModal close={closePupModal} content={displayPup} />
+                <PupModal
+                    close={closePupModal}
+                    content={displayPup}
+                    modalStyle={'pup-modal'}
+                    isDelete={false} />
             )}
         </>
     );
@@ -127,32 +153,29 @@ const MyPups = () => {
                     </div>
                     <ContentCard className={"my-pups"} content={myPups} />
                 </div>
-            ) : ((isActive !== 'editPup') ? (
-                <div>
-                    <PupForm
-                        httpType={'post'}
-                        updatePups={fetchPups}
-                        setIsActive={setIsActive}
-                        setIsActiveAlert={setIsActiveAlert}
-                        setAlertMessage={setAlertMessage}
-                    />
-                </div>
             ) : (
                 <div>
                     <PupForm
-                        httpType={'put'}
+                        httpType={isActive === 'addPup' ? 'post' : 'put'}
                         updatePups={fetchPups}
-                        pup_id={selectedPup.id}
+                        pup_id={selectedPup?.id}
                         setIsActive={setIsActive}
                         setIsActiveAlert={setIsActiveAlert}
                         setAlertMessage={setAlertMessage}
                     />
                 </div>
-            ))}
-             {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage}/>}
+            )}
+            {isActiveAlert && (
+                <AlertModal
+                    close={closeAlertModal}
+                    content={alertMessage}
+                    modalStyle={'pup-modal'}
+                    isDelete={false}
+                />
+            )}
         </div>
-       
-        
+
+
     );
 };
 

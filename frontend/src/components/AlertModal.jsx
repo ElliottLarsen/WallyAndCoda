@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { createPortal } from 'react-dom';
 
-export default function AlertModal({ close, content }) {
+export default function AlertModal({ close, content, modalStyle, isDelete }) {
     const dialog = useRef();
 
     useEffect(() => {
@@ -11,12 +11,13 @@ export default function AlertModal({ close, content }) {
     }, []);
 
     useEffect(() => {
+        if (!isDelete) {
         const timer = setTimeout(() => {
             close();
         }, 1500);
         return () => {
             clearTimeout(timer);
-        }
+        }}
     }, [])
 
     const handleClose = () => {
@@ -25,7 +26,7 @@ export default function AlertModal({ close, content }) {
     };
 
     return createPortal(
-        <dialog onClose={handleClose} ref={dialog} className="pup-modal">
+        <dialog onClose={handleClose} ref={dialog} className={modalStyle}>
             <div style={{textAlign: 'center'}}>{content}</div>
             {/* <form method='dialog'>
                 <button className="exit-button" onClick={handleClose}>Close</button>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import AlertModal from "./AlertModal";
 import InputForm from "./InputForm";
 
 const PUP_FORM = [
@@ -90,18 +89,14 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive, set
                 });
                 setAlertMessage(`${formData.pup_name} added!`);
                 setIsActiveAlert(true);
-                // alert('Pup added!')
             } else {
                 await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
                 });
-                
                 setAlertMessage(`${formData.pup_name} updated succesfully!`);
                 setIsActiveAlert(true);
-                
-                // alert('Pup updated successfully!');
             }
             updatePups();
             setIsActive('pupDisplay');
