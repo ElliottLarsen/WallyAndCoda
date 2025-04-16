@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import AlertModal from './AlertModal';
+import DeleteConfirmation from './DeleteConfirmation';
 import PupRecordForm from './PupRecordForm';
 import DisplayPupRecords from './DisplayPupRecords';
 import ContentCard from './ContentCard';
@@ -13,6 +15,11 @@ const PupRecords = () => {
     const [selectedPup, setSelectedPup] = useState('');
     const [records, setRecords] = useState([]);
     const [recordId, setRecordId] = useState();
+
+    const [isActiveAlert, setIsActiveAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState();
+    const [activeDelete, setIsActiveDelete] = useState(false);
+    const [activeModal, setActiveModal] = useState(false);
 
     const [isActive, setIsActive] = useState('pupDisplay');
 
@@ -83,6 +90,19 @@ const PupRecords = () => {
         setIsActive(value);
     }
 
+    const closeAlertModal = () => {
+        setIsActiveAlert(false);
+    }
+
+    function openDeleteModal() {
+        setIsActiveDelete(true);
+    }
+
+    const closeDeleteModal = () => {
+        setIsActiveDelete(false);
+        setIsActive('pupDisplay');
+    }
+
     let pupDropdown = (
         <PupDropdown pups={pups} selectPup={selectedPup} handleChange={handlePupChange} />
 
@@ -106,29 +126,26 @@ const PupRecords = () => {
                         handleDelete={handleDeleteRecord}
                         setIsActive={setIsActive}
                         setRecordId={setRecordId}
+                        activeDelete={activeDelete}
+                        openDelete={openDeleteModal}
+                        closeDelete={closeDeleteModal}
                     />
+
                 </>
             ) : (
-                (isActive !== 'editRecord') ? (
-                    <div>
-                        <PupRecordForm
-                            choosenPup={selectedPup}
-                            httpType={'post'}
-                            updateRecords={fetchRecords}
-                            setIsActive={setIsActive}
-                        />
-                    </div>
-                ) : (
-                    <div>
-                        <PupRecordForm
-                            choosenPup={selectedPup}
-                            httpType={'put'}
-                            record_id={recordId}
-                            updateRecords={fetchRecords}
-                            setIsActive={setIsActive}
-                        />
-                    </div>
-                ))}
+                <div>
+                    <PupRecordForm
+                        choosenPup={selectedPup}
+                        httpType={isActive === 'addRecord' ? 'post' : 'put'}
+                        updateRecords={fetchRecords}
+                        record_id={isActive === 'editRecord' ? recordId : null}
+                        setIsActive={setIsActive}
+                        setIsActiveAlert={setIsActiveAlert}
+                        setAlertMessage={setAlertMessage}
+                    />
+                </div>
+            )}
+            {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage} modalStyle={'pup-modal'} />}
         </div>
     );
 };

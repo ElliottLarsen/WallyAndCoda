@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
+import AlertModal from './AlertModal';
 import UserDisplay from './UserDisplay';
 import UserForm from './UserForm';
 
@@ -11,6 +12,9 @@ const User = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isActiveAlert, setIsActiveAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -67,15 +71,23 @@ const User = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert('User account updated successfully');
+            setAlertMessage('User account updated successfully');
+            setIsActiveAlert(true);
+            // alert('User account updated successfully');
             setIsActive('userDisplay');
         } catch (error) {
             console.error('Error updating user data:', error);
+            setAlertMessage('Error updating user data.');
+            setIsActiveAlert(true);
         }
     };
 
     function handleEditClick() {
         setIsActive('editUser');
+    }
+
+    const closeAlertModal = () => {
+        setIsActiveAlert(false);
     }
 
     if (loading) {
@@ -116,6 +128,7 @@ const User = () => {
                     setIsActive={setIsActive}
                 />
             )}
+            {isActiveAlert && <AlertModal close={closeAlertModal} content={alertMessage} />}
         </div>
     );
 };

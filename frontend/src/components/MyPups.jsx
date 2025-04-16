@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import PupForm from './PupForm';
 import DisplayPup from './DisplayPup';
 import PupModal from './PupModal';
 import ContentCard from './ContentCard';
+import AlertModal from './AlertModal';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const MyPups = () => {
     const navigateTo = useNavigate();
     const [pups, setPups] = useState([]);
     const [selectedPup, setSelectedPup] = useState('');
+    const [isActiveAlert, setIsActiveAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState();
 
     const [isActive, setIsActive] = useState('pupDisplay')
+    const [activeDelete, setIsActiveDelete] = useState(false);
     const [activeModal, setActiveModal] = useState(false);
 
     useEffect(() => {
@@ -59,7 +64,6 @@ const MyPups = () => {
     const handleEditClick = (pup, value) => {
         setIsActive(value);
         setSelectedPup(pup);
-        fetchPups();
     }
 
     function handleClick(value) {
@@ -74,6 +78,18 @@ const MyPups = () => {
     const closePupModal = () => {
         setActiveModal(false);
         setSelectedPup(null);
+    }
+
+    const closeAlertModal = () => {
+        setIsActiveAlert(false);
+    }
+
+    const openDeleteModal = () => {
+        setIsActiveDelete(true);
+    }
+
+    const closeDeleteModal = () => {
+        setIsActiveDelete(false);
     }
 
     let displayPup = (
@@ -96,8 +112,23 @@ const MyPups = () => {
                                 <FontAwesomeIcon
                                     className='trash'
                                     icon={faTrash}
-                                    onClick={() => handleDeletePup(pup.id)}
+                                    onClick={openDeleteModal}
                                 />
+                                {activeDelete && (
+                                    <AlertModal
+                                        close={closePupModal}
+                                        content={(
+                                            <DeleteConfirmation
+                                                onConfirm={() => {
+                                                    handleDeletePup(pup.id);
+                                                    closeDeleteModal();
+                                                }}
+                                                onCancel={closeDeleteModal}
+                                            />)}
+                                        modalStyle={'pup-modal'}
+                                        isDelete={true}
+                                    />
+                                )}
                             </td>
                         </tr>
                     ))}
@@ -105,11 +136,14 @@ const MyPups = () => {
             </table>
 
             {activeModal && selectedPup && (
-                <PupModal content={displayPup} close={closePupModal} />
+                <PupModal
+                    close={closePupModal}
+                    content={displayPup}
+                    modalStyle={'pup-modal'}
+                    isDelete={false} />
             )}
         </>
     );
-
 
     return (
         <div className='container'>
@@ -120,25 +154,29 @@ const MyPups = () => {
                     </div>
                     <ContentCard className={"my-pups"} content={myPups} />
                 </div>
-            ) : ((isActive !== 'editPup') ? (
-                <div>
-                    <PupForm
-                        httpType={'post'}
-                        updatePups={fetchPups}
-                        setIsActive={setIsActive}
-                    />
-                </div>
             ) : (
                 <div>
                     <PupForm
-                        httpType={'put'}
+                        httpType={isActive === 'addPup' ? 'post' : 'put'}
                         updatePups={fetchPups}
-                        pup_id={selectedPup.id}
+                        pup_id={selectedPup?.id}
                         setIsActive={setIsActive}
+                        setIsActiveAlert={setIsActiveAlert}
+                        setAlertMessage={setAlertMessage}
                     />
                 </div>
-            ))}
+            )}
+            {isActiveAlert && (
+                <AlertModal
+                    close={closeAlertModal}
+                    content={alertMessage}
+                    modalStyle={'pup-modal'}
+                    isDelete={false}
+                />
+            )}
         </div>
+
+
     );
 };
 

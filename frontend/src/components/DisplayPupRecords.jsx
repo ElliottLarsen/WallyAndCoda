@@ -2,8 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import FormatDate from '../util/FormatDate';
+import AlertModal from './AlertModal';
+import DeleteConfirmation from './DeleteConfirmation';
 
-export default function DisplayPupRecords({ records, handleDelete, setIsActive, setRecordId }) {
+export default function DisplayPupRecords({ records, handleDelete, setIsActive, setRecordId, activeDelete, openDelete, closeDelete }) {
     if (records.length === 0) {
         return <p>No records yet!</p>;
     }
@@ -44,13 +46,29 @@ export default function DisplayPupRecords({ records, handleDelete, setIsActive, 
                                     icon={faEdit}
                                     onClick={() => handleEditClick(record.id)}
                                 />
-                                
+
                                 <FontAwesomeIcon
                                     style={{ cursor: 'pointer' }}
                                     className='trash'
                                     icon={faTrash}
-                                    onClick={() => handleDelete(record.id)}
+                                    onClick={() => openDelete()}
                                 />
+                                {activeDelete && (
+                                    <AlertModal
+                                        close={closeDelete}
+                                        content={(
+                                            <DeleteConfirmation
+                                                onConfirm={() => {
+                                                    handleDelete(record.id);
+                                                    closeDelete();
+                                                }}
+                                                onCancel={closeDelete}
+                                            />)}
+                                        modalStyle={'pup-modal'}
+                                        isDelete={true}
+                                    />
+                                )}
+
                             </td>
                         </tr>
                     ))}

@@ -11,7 +11,7 @@ const PUP_FORM = [
     { name: "akc_registration_name", label: "AKC Registration Name", type: "text", placeholder: "AKC Registration Name", required: false },
 ];
 
-export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
+export default function PupForm({ httpType, updatePups, pup_id, setIsActive, setIsActiveAlert, setAlertMessage }) {
     const getToken = () => localStorage.getItem('token');
     const [formData, setFormData] = useState({
         pup_name: '',
@@ -29,7 +29,7 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
 
     const fetchPupData = async (pup_id) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
+            const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, {
                 headers: {
                     Authorization: `Bearer ${getToken()}`
                 }
@@ -45,30 +45,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
         } catch (error) {
             console.error('Error fetching pup:', error);
         }
-    };
-
-    const fetchData = async () => {
-        const response = await axios.get(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        });
-        const currPup = response.data;
-        return {
-            pup_name: currPup.pup_name,
-            pup_sex: currPup.pup_sex,
-            microchip_number: currPup.microchip_number,
-            akc_registration_number: currPup.akc_registration_number,
-            akc_registration_name: currPup.akc_registration_name
-        }
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
     };
 
     const handleSubmit = async (formData) => {
@@ -87,19 +63,23 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
                     akc_registration_number: '',
                     akc_registration_name: ''
                 });
-                alert('Pup added!')
+                setAlertMessage(`${formData.pup_name} added!`);
+                setIsActiveAlert(true);
             } else {
-                await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}/`, formData, {
+                await axios.put(`http://127.0.0.1:8000/wallyandcoda/pup/${pup_id}`, formData, {
                     headers: {
                         Authorization: `Bearer ${getToken()}`
                     }
                 });
-                alert('Pup updated successfully!');
+                setAlertMessage(`${formData.pup_name} updated succesfully!`);
+                setIsActiveAlert(true);
             }
             updatePups();
             setIsActive('pupDisplay');
         } catch (error) {
             console.error('Error submitting form:', error);
+            setAlertMessage('Error submitting form!');
+            setIsActiveAlert(true);
         }
     };
 
@@ -108,7 +88,6 @@ export default function PupForm({ httpType, updatePups, pup_id, setIsActive }) {
             <InputForm
                 initialData={formData}
                 httpType={httpType}
-                fetchData={(httpType === 'put') ? fetchData : null}
                 onSubmit={handleSubmit}
                 onCancel={() => setIsActive('pupDisplay')}
                 formFields={PUP_FORM}

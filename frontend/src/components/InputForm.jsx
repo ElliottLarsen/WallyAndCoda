@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 export default function InputForm({
     initialData,
     httpType,
-    fetchData,
     onSubmit,
     onCancel,
     formFields,
@@ -12,16 +11,8 @@ export default function InputForm({
     const [formData, setFormData] = useState(initialData);
 
     useEffect(() => {
-        const fetchAndSetData = async () => {
-            const data = await fetchData();
-            setFormData(data);
-        };
-        if (httpType === 'put' && fetchData) {
-            fetchAndSetData();
-        }
-
-    }, [httpType, fetchData]);
-
+        setFormData(initialData);
+    }, [initialData])
 
     const handleChange = (event) => {
         const { name, value } = event.target;
